@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="report_employee_asset_details">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <div class="oe_structure">
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <table class="table table-condensed" height="10%" style="border: 2px solid black;width:500px">
+                                        <tr>
+                                            <td style="width:40%">
+                                                <p style="text-align:center;padding-top:10px">
+                                                    <img t-if="not o.image_1920"
+                                                         t-att-src="'/web/static/img/placeholder.png'"
+                                                         height="140px" width="120px" border="1px"/>
+                                                    <img t-if="o.image_1920"
+                                                         t-att-src="image_data_uri(o.image_1920)"
+                                                         height="140px" width="120px" border="1px"/>
+                                                </p>
+                                            </td>
+                                            <td style="padding-left:60px;width:60%">
+                                                <table>
+                                                    <tr>
+                                                        <td colspan="3" class="text-center">
+                                                            <b>
+                                                                <h1>
+                                                                    <span t-field="o.asset_serial_number"/>
+                                                                </h1>
+                                                            </b>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3" class="text-center">
+                                                            <b>
+                                                                <h2>
+                                                                    <span t-field="o.asset_models"/>
+                                                                </h2>
+                                                            </b>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3" class="text-center">
+                                                            <h2>
+                                                                <span t-field="o.asset_specifications"/>
+                                                            </h2>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <br/>
+                            <table class="table table-sm o_main_table" style="margin-bottom:70px;">
+                                <thead>
+                                    <th name="th-number" class="text-left">
+                                        <span>Asset Number</span>
+                                    </th>
+                                    <th name="th-type" class="text-left">
+                                        <span>Asset Type</span>
+                                    </th>
+                                    <th name="th-employee" class="text-left">
+                                        <span>Employee</span>
+                                    </th>
+                                     <th name="th-designation" class="text-left">
+                                        <span>Designation</span>
+                                    </th>
+                                    <th name="th-provider" class="text-left">
+                                        <span>Provided By</span>
+                                    </th>
+                                    <th name="th-date" class="text-left">
+                                        <span>Allotment Date</span>
+                                    </th>
+
+                                </thead>
+                                <tr>
+                                    <td>
+                                        <span t-field="o.asset_number"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.employee_asset_type_id"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.employee_id"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.employee_designation"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.provided_by"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.asset_allotment_date"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

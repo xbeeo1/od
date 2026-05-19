@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="mrp_report_template_1">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <style>
+                        @font-face {
+                        font-family: 'Roman';
+                        src: url('/ssol_od_mrp_customization/static/src/fonts/times-new-roman.ttf')
+                        format('truetype');
+                        }
+                        body {
+                        font-family: 'Roman', serif;
+
+                        }
+                        .font-text {
+                        font-family: 'Roman', sans-serif;
+                        }
+                    </style>
+
+                    <div class="page font-text"
+                         style="margin-left: 20px; border-left: 5px solid #f21d21; margin-right: 20px; font-size: 18px; padding-left: 10px;">
+                        <t t-call="web.html_container">
+                            <t t-set="company" t-value="res_company"/>
+                            <t t-set="partner" t-value="res_partner"/>
+                            <br/>
+                            <br/>
+                            <div class="row">
+                                <table class="table table-borderless">
+                                    <tr>
+                                        <td>
+                                            <img src="/ssol_od_mrp_customization/static/src/img/header_footer/new_head.png"
+                                                 width="140px"
+                                                 height="60px"
+                                                 style="padding-left: 20px;"/>
+                                        </td>
+                                        <td style="vertical-align: middle; padding-left: 20px;">
+                                            <span style="font-size: 30px; font-weight: bold; color: #c00000">
+                                                OMERDRAZ ENGINEERING COMPANY
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="row" style="text-align: center; margin-top:-25px">
+                                <span style="font-size: 24px; font-weight: bold; text-decoration: underline; display: block;"
+                                      class="font-text">
+                                    <strong>
+                                        <b>
+                                            INSPECTION / PNEUMATIC TEST REPORT
+                                        </b>
+                                    </strong>
+                                </span>
+                            </div>
+
+                            <br/>
+
+                            <!-- IF REF NO OR DATE-->
+                            <t t-if="o.ref_no or o.date_tr">
+                                <div style="padding-left: 5px; width: 100%; margin-bottom: 5px;">
+                                    <div style="width: 80%; float: left;">
+                                        <span style="font-weight: bold">Ref No: </span>
+                                        <span style="text-decoration: underline"><t t-esc="o.ref_no"/></span>
+                                    </div>
+                                    <div style="width: 20%; float: right;">
+                                        <span style="font-weight: bold">Date: </span>
+                                        <span style="text-decoration: underline"><t t-esc="o.date_tr"/></span>
+                                    </div>
+                                </div>
+                                <br/>
+                            </t>
+
+                            <!-- IF FOR M/s OR PO #-->
+                            <t t-if="o.for_m_s or o.po_number">
+                                <div style="padding-left: 5px; width: 100%; padding-top: 5px; margin-bottom: 5px;">
+                                    <div style="width: 62%; float: left;">
+                                        <span style="font-weight: bold">FOR M/s: </span>
+                                        <span style="text-decoration: underline"><t t-esc="o.for_m_s"/></span>
+                                    </div>
+                                    <div style="width: 38%; float: right;">
+                                        <span style="font-weight: bold">PO #: </span>
+                                        <span style="text-decoration: underline"><t t-esc="o.po_number"/></span>
+                                    </div>
+                                </div>
+                                <br/>
+                            </t>
+
+                            <!-- IF Add-->
+                            <t t-if="o.address_tr">
+                                <div style="padding-left: 5px; margin-bottom: 5px;">
+                                    <span style="font-weight: bold">Add: </span>
+                                    <span style="text-decoration: underline"><t t-esc="o.address_tr"/></span>
+                                </div>
+                            </t>
+
+
+                            <!-- IF product_id OR Serial #-->
+                            <t t-if="o.for_m_s or o.po_number">
+                                <div style="padding-left: 5px; width: 100%; padding-top: 1px; margin-bottom: 5px;">
+                                    <div style="width: 75%; float: left;">
+                                        <span style="font-weight: bold">PRODUCT NAME: </span>
+                                        <span style="text-decoration: underline"><t t-esc="o.product_id.name"/></span>
+                                    </div>
+                                    <div style="width: 25%; float: right;">
+                                        <span style="font-weight: bold">Serial #: </span>
+                                        <span style="text-decoration: underline"><t t-esc="o.serial_tr"/></span>
+                                    </div>
+                                </div>
+                                <br/>
+                            </t>
+
+                            <br/>
+
+                            <!-- IF MS PIPE/TUBE DIA-->
+                            <t t-if="o.address_tr">
+                                <div style="padding-left: 5px; margin-bottom: 5px;">
+                                    <span style="font-weight: bold">MS PIPE/TUBE DIA: </span>
+                                    <span style="text-decoration: underline"><t t-esc="o.ms_pipe_tube_dia"/></span>
+                                </div>
+                                <br/>
+                            </t>
+
+                            <!-- IF ms_pipe_hdg OR ref_od_drawing #-->
+                            <t t-if="o.for_m_s or o.po_number">
+                                <div style="padding-left: 5px; width: 100%; padding-top: 1px; margin-bottom: 5px;">
+                                    <div style="width: 55%; float: left;">
+                                        <span style="font-weight: bold">➢ MS PIPE HOT DIP GALVANIZED: </span>
+                                        <span style="text-decoration: underline"><t t-esc="o.ms_pipe_hdg"/></span>
+                                    </div>
+                                    <div style="width: 45%; float: right;">
+                                        <span style="font-weight: bold">REF: OMERDRAZ Drawing#: </span>
+                                        <span style="text-decoration: underline"><t t-esc="o.ref_od_drawing"/></span>
+                                    </div>
+                                </div>
+                                <br/>
+                                <br/>
+                            </t>
+
+                            <!-- IF MS PIPE/TUBE DIA-->
+                            <t t-if="o.overall_coil_lengths">
+                                <div style="padding-left: 5px; margin-bottom: 5px;">
+                                    <span style="font-weight: bold"> ➢ Overall Coils Length: </span>
+                                    <span style="text-decoration: underline"><t t-esc="o.overall_coil_lengths"/></span>
+                                </div>
+                                <br/>
+                            </t>
+
+                            <!-- IF overall_coil_height OR header_od_dia #-->
+                            <t t-if="o.overall_coil_height or o.header_od_dia">
+                                <div style="padding-left: 5px; width: 100%; padding-top: 1px; margin-bottom: 5px;">
+                                    <div style="width: 70%; float: left;">
+                                        <span style="font-weight: bold">➢ Overall Coils Height: </span>
+                                        <span style="text-decoration: underline"><t t-esc="o.overall_coil_height"/></span>
+                                    </div>
+                                    <div style="width: 30%; float: right;">
+                                        <span style="font-weight: bold">Header OD Dia: </span>
+                                        <span style="text-decoration: underline"><t t-esc="o.header_od_dia"/></span>
+                                    </div>
+                                </div>
+                                <br/>
+                                <br/>
+                            </t>
+
+                            <!-- IF overall_header_lengths OR header_connection #-->
+                            <t t-if="o.overall_header_lengths or o.header_connection">
+                                <div style="padding-left: 5px; width: 100%; padding-top: 1px; margin-bottom: 5px;">
+                                    <div style="width: 55%; float: left;">
+                                        <span style="font-weight: bold">➢ Overall Header length: </span>
+                                        <span style="text-decoration: underline"><t t-esc="o.overall_header_lengths"/></span>
+                                    </div>
+                                    <div style="width: 45%; float: right;">
+                                        <span style="font-weight: bold">Header connection Center to center: </span>
+                                        <span style="text-decoration: underline"><t t-esc="o.header_connection"/></span>
+                                    </div>
+                                </div>
+                                <br/>
+                                <br/>
+                            </t>
+
+                            <!-- IF total_coil_in_bundles-->
+                            <t t-if="o.total_coil_in_bundles">
+                                <div style="padding-left: 5px; margin-bottom: 5px;">
+                                    <span style="font-weight: bold"> ➢ Total No. of Coils / Stands in Bundle: </span>
+                                    <span style="text-decoration: underline"><t t-esc="o.total_coil_in_bundles"/></span>
+                                </div>
+                                <br/>
+                            </t>
+
+                            <!-- IF pressure_no_gcc_no-->
+                            <t t-if="o.pressure_no_gcc_no">
+                                <div style="padding-left: 5px; margin-bottom: 5px;">
+                                    <span style="font-weight: bold"> ➢ Pressure Gauge calibration certificate No: </span>
+                                    <span style="text-decoration: underline"><t t-esc="o.pressure_no_gcc_no"/></span>
+                                </div>
+                                <br/>
+                            </t>
+
+                            <!-- IF pressure_no_gcc_no-->
+                            <t t-if="o.gauge_calibration_dd">
+                                <div class="row"
+                                     style="display: flex; width: 100%; justify-content: space-between; align-items: flex-start;">
+                                    <!-- Left Table -->
+                                    <div style="width: 48%; padding-left: 5px; margin-bottom: 5px;">
+                                        <span style="font-weight: bold"> ➢ Gauge Calibration due date: </span>
+                                        <span style="text-decoration: underline"><t t-esc="o.gauge_calibration_dd"/></span>
+                                    </div>
+
+                                    <table class="table"
+                                           style="width: 48%; margin-left: 2%; border: 1px solid black; border-collapse: collapse; text-align: center;">
+                                        <tr>
+                                            <td style="border: 1px solid black; font-weight: bold">Hydraulically</td>
+                                            <td style="border: 1px solid black; font-weight: bold">Air</td>
+                                            <td style="border: 1px solid black; font-weight: bold">Nitrogen</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: 1px solid black; font-weight: bold">
+                                                <t t-if="o.used_for == 'hydraulically'">✔</t>
+                                                <t t-if="o.used_for != 'hydraulically'">✘</t>
+                                            </td>
+                                            <td style="border: 1px solid black; font-weight: bold">
+                                                <t t-if="o.used_for == 'air'">✔</t>
+                                                <t t-if="o.used_for != 'air'">✘</t>
+                                            </td>
+                                            <td style="border: 1px solid black; font-weight: bold">
+                                                <t t-if="o.used_for == 'nitrogen'">✔</t>
+                                                <t t-if="o.used_for != 'nitrogen'">✘</t>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                            </t>
+
+
+                            <!-- IF ➢ Test pressure:-->
+                            <t t-if="o.test_pressure">
+                                <div style="padding-left: 5px; margin-bottom: 5px;">
+                                    <span style="font-weight: bold"> ➢ Test pressure: </span>
+                                    <span style="text-decoration: underline"><t t-esc="o.test_pressure"/></span>
+                                </div>
+                                <br/>
+                            </t>
+
+                            <!-- IF pressure_start_time OR pressure_end_time #-->
+                            <t t-if="o.overall_header_lengths or o.header_connection">
+                                <div style="padding-left: 5px; width: 100%; padding-top: 1px; margin-bottom: 5px;">
+                                    <div style="width: 55%; float: left;">
+                                        <span style="font-weight: bold">➢ Pressure Starting time: </span>
+                                        <span style="text-decoration: underline"><t t-esc="o.pressure_start_time"/></span>
+                                    </div>
+                                    <div style="width: 45%; float: right;">
+                                        <span style="font-weight: bold">Pressure End time: </span>
+                                        <span style="text-decoration: underline"><t t-esc="o.pressure_end_time"/></span>
+                                    </div>
+                                </div>
+                                <br/>
+                                <br/>
+                            </t>
+
+                            <!-- IF pressure_start_time OR pressure_end_time #-->
+                            <t t-if="o.pressure_holding_time or o.temp_during_testing">
+                                <div style="padding-left: 5px; width: 100%; padding-top: 1px; margin-bottom: 5px;">
+                                    <div style="width: 55%; float: left;">
+                                        <span style="font-weight: bold">➢ Pressure Holding time: </span>
+                                        <span style="text-decoration: underline"><t t-esc="o.pressure_holding_time"/></span>
+                                    </div>
+                                    <div style="width: 45%; float: right;">
+                                        <span style="font-weight: bold">Temp. During testing: </span>
+                                        <span style="text-decoration: underline"><t t-esc="o.temp_during_testing"/></span>
+                                    </div>
+                                </div>
+                                <br/>
+                                <br/>
+                            </t>
+
+                            <!-- IF test_result-->
+                            <t t-if="o.test_result">
+                                <table class="table table-borderless" style="table-layout: fixed">
+                                    <tr>
+                                        <td style="text-align: left; padding-bottom: 0px; width: 30%; font-weight: bold">
+                                            ➢ TEST RESULT: Satisfactory
+                                        </td>
+                                        <td style="text-align: left; padding: 20px; border: 1px solid black; width: 8%;">
+                                            <t t-if="o.test_result == 'satisfactory'">✔</t>
+                                            <t t-if="o.test_result != 'satisfactory'">✘</t>
+                                        </td>
+                                        <td style="width: 10%; font-weight: bold">
+                                            Rejected
+                                        </td>
+                                        <td style="text-align: left; border: 1px solid black; padding: 20px; width: 8%;">
+                                            <t t-if="o.test_result == 'rejected'">✔</t>
+                                            <t t-if="o.test_result != 'rejected'">✘</t>
+                                        </td>
+                                        <td style="width: 44%;">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </t>
+
+                            <!-- IF remarks_tr-->
+                            <t t-if="o.remarks_tr">
+                                <table class="table table-borderless">
+                                    <tr>
+                                        <td style="text-align: left; padding-bottom: 0px; width: 10%; font-weight: bold">
+                                            REMARKS:
+                                        </td>
+                                        <td style="width: 90%;">
+                                            <span style="text-decoration: underline;" t-field="o.remarks_tr"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </t>
+
+
+                            <table class="table"
+                                   style="border: 1px solid black; border-collapse: collapse; width: 100%;">
+                                <tr>
+                                    <td style="border: 1px solid black; text-align: center; font-weight: bold; font-weight: bold">
+                                        INSPECTION
+                                    </td>
+                                    <td style="border: 1px solid black; text-align: center; font-weight: bold; font-weight: bold">
+                                        OMERDRAZ
+                                        ENG. CO.
+                                    </td>
+                                    <td style="border: 1px solid black; text-align: center; font-weight: bold; font-weight: bold">
+                                        THIRD
+                                        PARTY INSPECTION
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid black; text-align: center; font-weight: bold">Name:
+                                    </td>
+                                    <td style="border: 1px solid black; text-align: center; font-weight: bold">
+                                        <t t-if="o.name_trc">
+                                            <t t-esc="o.name_tr"/>
+                                        </t>
+                                        <t t-if="not o.name_tr">✘</t>
+                                    </td>
+                                    <td style="border: 1px solid black; text-align: center; font-weight: bold">
+                                        <t t-if="o.name_trc">
+                                            <t t-esc="o.name_tp_tr"/>
+                                        </t>
+                                        <t t-if="not o.name_tp_tr">✘</t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid black; text-align: center; font-weight: bold">Date:
+                                    </td>
+                                    <td style="border: 1px solid black; text-align: center;">
+                                        <t t-if="o.name_trc">
+                                            <t t-esc="o.date_inspection_tr"/>
+                                        </t>
+                                        <t t-if="not o.date_inspection_tr">✘</t>
+                                    </td>
+                                    <td style="border: 1px solid black; text-align: center;">
+                                        <t t-if="o.name_trc">
+                                            <t t-esc="o.date_inspection_rp_tr"/>
+                                        </t>
+                                        <t t-if="not o.date_inspection_rp_tr">✘</t>
+                                    </td>
+                                </tr>
+                                <tr style="height: 50px;">
+                                    <td style="border: none; vertical-align: middle; text-align: center; font-weight: bold">
+                                        Signature:
+                                    </td>
+                                    <td style="border: 1px solid black; text-align: center;">
+                                        <!--                                        <t t-esc="o.signature_tr"/>-->
+                                    </td>
+                                    <td style="border: 1px solid black; text-align: center;">
+                                        <!--                                        <t t-esc="o.signature_tp_tr"/>-->
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </t>
+                    </div>
+
+                    <div class="footer"
+                         style="text-align: center; padding-top: 10px; border-top: 3px solid #f21d21; color: #c00000; font-weight: bold; margin-left: 80px; margin-right: 80px">
+                        <table class="table table-borderless">
+                            Add: 100-S QUAID-E-AZAM INDUSTRIAL ESTATE TOWNSHIP, LAHORE.
+                            <br/>
+                            Web: www.omerdraz.com.pk/ | E-mail: omerdraz786@hotmail.com | Tel #: 042 – 35119080
+                        </table>
+                    </div>
+
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>
+
+

@@ -1,0 +1,842 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="mrp_report_template_1">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <style>
+                        @font-face {
+                        font-family: 'Roman';
+                        src: url('/ssol_od_mrp_customization/static/src/fonts/times-new-roman.ttf')
+                        format('truetype');
+                        }
+                        body {
+                        font-family: 'Roman', serif;
+                        }
+                        .font-text {
+                        font-family: 'Roman', sans-serif;
+                        }
+                    </style>
+
+                    <div class="page font-text"
+                         style="margin-left: 20px; border-left: 5px solid #f21d21; margin-right: 20px; font-size: 14px; padding-left: 10px;">
+                        <t t-call="web.html_container">
+                            <t t-set="company" t-value="res_company"/>
+                            <t t-set="partner" t-value="res_partner"/>
+                            <br/>
+                            <br/>
+                            <div class="row">
+                                <table class="table table-borderless">
+                                    <tr>
+                                        <td>
+                                            <img src="/ssol_od_mrp_customization/static/src/img/header_footer/new_head.png"
+                                                 width="140px"
+                                                 height="60px"
+                                                 style="padding-left: 20px;"/>
+                                        </td>
+                                        <td style="vertical-align: middle; padding-left: 20px;">
+                                            <span style="font-size: 30px; font-weight: bold; color: #c00000">
+                                                <t t-esc="o.company_id.name"/>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="row" style="text-align: center;">
+                                <span style="font-size: 24px; font-weight: bold; text-decoration: underline; display: block;" class="font-text">
+                                    INSPECTION / PNEUMATIC TEST REPORT
+                                </span>
+                            </div>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 5px; width: 8%;">
+                                        Ref No:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 67%;">
+                                        <t t-esc="o.ref_no"/>
+                                    </td>
+                                    <td style="text-align: right; width: 10%;">
+                                        Date:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 15%;">
+                                        <t t-esc="o.date_tr"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 5px; width: 10%;">
+                                        FOR M/s:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 50%;">
+                                        <t t-esc="o.for_m_s"/>
+                                    </td>
+                                    <td style="text-align: right; width: 10%;">
+                                        PO #:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 30%;">
+                                        <t t-esc="o.po_number"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 5px; width: 10%;">
+                                        Add:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 90%;">
+                                        <t t-esc="o.address_tr"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 20%;">
+                                        PRODUCT NAME:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 40%;">
+                                        <t t-esc="o.product_id.name"/>
+                                    </td>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 15%;">
+                                        Serial #:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 25%;">
+                                        <t t-esc="o.serial_tr"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 3px; width: 20%;">
+                                        `MS PIPE/TUBE DIA:
+                                    </td>
+                                    <td style="width: 80%;">
+                                        <span style="border-bottom: 1px solid black;" t-field="o.ms_pipe_tube_dia"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 0px; width: 30%;">
+                                        ➢ MS PIPE HOT DIP GALVANIZED:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 20%;">
+                                        <t t-esc="o.ms_pipe_hdg"/>
+                                    </td>
+                                    <td style="text-align: left; padding-bottom: 0px; width: 25%;">
+                                        REF: OMERDRAZ Drawing#:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 25%;">
+                                        <t t-esc="o.ref_od_drawing"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 0px; width: 30%;">
+                                        ➢ Overall Coils Length:
+                                    </td>
+                                    <td style="width: 70%;">
+                                        <span style="border-bottom: 1px solid black;" t-field="o.overall_coil_lengths"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 0px; width: 30%;">
+                                        ➢ Overall Coils Height:
+                                    </td>
+                                    <td style="width: 20%;">
+                                        <span style="border-bottom: 1px solid black;" t-field="o.overall_coil_height"/>
+                                    </td>
+                                    <td style="text-align: left; padding-bottom: 0px; width: 30%;">
+                                        Header OD Dia:
+                                    </td>
+                                    <td style="width: 20%;">
+                                        <span style="border-bottom: 1px solid black;" t-field="o.header_od_dia"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 0px; width: 30%;">
+                                        ➢ Overall Header length:
+                                    </td>
+                                    <td style="width: 20%;">
+                                        <span style="border-bottom: 1px solid black;"
+                                              t-field="o.overall_header_lengths"/>
+                                    </td>
+                                    <td style="text-align: left; padding-bottom: 0px; width: 30%;">
+                                        Header connection Center to center:
+                                    </td>
+                                    <td style="width: 20%;">
+                                        <span style="border-bottom: 1px solid black;" t-field="o.header_connection"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 0px; width: 30%;">
+                                        ➢ Total No. of Coils / Stands in Bundle:
+                                    </td>
+                                    <td style="width: 70%;">
+                                        <span style="border-bottom: 1px solid black;"
+                                              t-field="o.total_coil_in_bundles"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 0px; width: 40%;">
+                                        ➢ Pressure Gauge calibration certificate No:
+                                    </td>
+                                    <td style="width: 60%;">
+                                        <span style="border-bottom: 1px solid black;" t-field="o.pressure_no_gcc_no"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="row"
+                                 style="display: flex; width: 100%; justify-content: space-between; align-items: flex-start;">
+                                <!-- Left Table -->
+                                <table class="table table-borderless"
+                                       style="width: 48%; margin-right: 2%; border-collapse: collapse;">
+                                    <tr>
+                                        <td style="text-align: left; padding-bottom: 5px; width: 60%;">
+                                            ➢ Gauge Calibration due date:
+                                        </td>
+                                        <td style="width: 40%; text-align: center;">
+                                            <span style="border-bottom: 1px solid black;"
+                                                  t-field="o.gauge_calibration_dd"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table class="table"
+                                       style="width: 48%; margin-left: 2%; border: 1px solid black; border-collapse: collapse; text-align: center;">
+                                    <tr>
+                                        <td style="border: 1px solid black;">Hydraulically</td>
+                                        <td style="border: 1px solid black;">Air</td>
+                                        <td style="border: 1px solid black;">Nitrogen</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid black;">
+                                            <t t-if="o.used_for == 'hydraulically'">✔</t>
+                                            <t t-if="o.used_for != 'hydraulically'">✘</t>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                            <t t-if="o.used_for == 'air'">✔</t>
+                                            <t t-if="o.used_for != 'air'">✘</t>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                            <t t-if="o.used_for == 'nitrogen'">✔</t>
+                                            <t t-if="o.used_for != 'nitrogen'">✘</t>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 0px; width: 30%;">
+                                        ➢ Test pressure:
+                                    </td>
+                                    <td style="width: 70%;">
+                                        <span style="border-bottom: 1px solid black;" t-field="o.test_pressure"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 0px; width: 30%;">
+                                        ➢ Pressure Starting time:
+                                    </td>
+                                    <td style="width: 20%;">
+                                        <span style="border-bottom: 1px solid black;" t-field="o.pressure_start_time"/>
+                                    </td>
+                                    <td style="text-align: left; padding-bottom: 0px; width: 30%;">
+                                        Pressure End time:
+                                    </td>
+                                    <td style="width: 20%;">
+                                        <span style="border-bottom: 1px solid black;" t-field="o.pressure_end_time"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 0px; width: 30%;">
+                                        ➢ Pressure Holding time:
+                                    </td>
+                                    <td style="width: 20%;">
+                                        <span style="border-bottom: 1px solid black;"
+                                              t-field="o.pressure_holding_time"/>
+                                    </td>
+                                    <td style="text-align: left; padding-bottom: 0px; width: 30%;">
+                                        Temp. During testing:
+                                    </td>
+                                    <td style="width: 20%;">
+                                        <span style="border-bottom: 1px solid black;" t-field="o.temp_during_testing"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless" style="table-layout: fixed">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 0px; width: 27%;">
+                                        ➢ TEST RESULT: Satisfactory
+                                    </td>
+                                    <td style="text-align: left; padding-bottom: 0px; border: 1px solid black; width: 5%;">
+                                        <t t-if="o.test_result == 'satisfactory'">✔</t>
+                                        <t t-if="o.test_result != 'satisfactory'">✘</t>
+                                    </td>
+                                    <td style="width: 10%;">
+                                        Rejected
+                                    </td>
+                                    <td style="text-align: left; border: 1px solid black; padding-bottom: 0px; width: 5%;">
+                                        <t t-if="o.test_result == 'rejected'">✔</t>
+                                        <t t-if="o.test_result != 'rejected'">✘</t>
+                                    </td>
+                                    <td style="width: 63%;">
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 0px; width: 10%;">
+                                        REMARKS:
+                                    </td>
+                                    <td style="width: 90%;">
+                                        <span style="border-bottom: 1px solid black;" t-field="o.remarks_tr"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table"
+                                   style="border: 1px solid black; border-collapse: collapse; width: 100%;">
+                                <tr>
+                                    <td style="border: 1px solid black; text-align: center; font-weight: bold;">
+                                        INSPECTION
+                                    </td>
+                                    <td style="border: 1px solid black; text-align: center; font-weight: bold;">OMERDRAZ
+                                        ENG. CO.
+                                    </td>
+                                    <td style="border: 1px solid black; text-align: center; font-weight: bold;">THIRD
+                                        PARTY INSPECTION
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid black; text-align: center;">Name:</td>
+                                    <td style="border: 1px solid black; text-align: center;">
+                                        <t t-if="o.name_trc">
+                                            <t t-esc="o.name_tr"/>
+                                        </t>
+                                        <t t-if="not o.name_tr">✘</t>
+                                    </td>
+                                    <td style="border: 1px solid black; text-align: center;">
+                                        <t t-if="o.name_trc">
+                                            <t t-esc="o.name_tp_tr"/>
+                                        </t>
+                                        <t t-if="not o.name_tp_tr">✘</t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid black; text-align: center;">Date:</td>
+                                    <td style="border: 1px solid black; text-align: center;">
+                                        <t t-if="o.name_trc">
+                                            <t t-esc="o.date_inspection_tr"/>
+                                        </t>
+                                        <t t-if="not o.date_inspection_tr">✘</t>
+                                    </td>
+                                    <td style="border: 1px solid black; text-align: center;">
+                                        <t t-if="o.name_trc">
+                                            <t t-esc="o.date_inspection_rp_tr"/>
+                                        </t>
+                                        <t t-if="not o.date_inspection_rp_tr">✘</t>
+                                    </td>
+                                </tr>
+                                <tr style="height: 50px;">
+                                    <td style="border: none; vertical-align: middle; text-align: center;">Signature:
+                                    </td>
+                                    <td style="border: 1px solid black; text-align: center;">
+                                        <t t-esc="o.signature_tr"/>
+                                    </td>
+                                    <td style="border: 1px solid black; text-align: center;">
+                                        <t t-esc="o.signature_tp_tr"/>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </t>
+                    </div>
+
+                    <div class="footer"
+                         style="text-align: center; padding-top: 10px; border-top: 3px solid #f21d21; color: #c00000; font-weight: bold; margin-left: 80px; margin-right: 80px">
+                        <table class="table table-borderless">
+                            Add: 100-S QUAID-E-AZAM INDUSTRIAL ESTATE TOWNSHIP, LAHORE.
+                            <br/>
+                            Web: www.omerdraz.com.pk/ | E-mail: omerdraz786@hotmail.com | Tel #: 042 – 35119080
+                        </table>
+                    </div>
+
+                </t>
+            </t>
+        </template>
+
+        <template id="mrp_report_template_2">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                                        <style>
+                        @font-face {
+                        font-family: 'Roman';
+                        src: url('/ssol_od_mrp_customization/static/src/fonts/times-new-roman.ttf')
+                        format('truetype');
+                        }
+                        body {
+                        font-family: 'Roman', serif;
+                        }
+                        .font-text {
+                        font-family: 'Roman', sans-serif;
+                        }
+                    </style>
+
+                    <div class="page font-text"
+                         style="margin-left: 20px; border-left: 5px solid #f21d21; margin-right: 20px; font-size: 14px; padding-left: 10px;">
+                        <t t-call="web.html_container">
+                            <t t-set="company" t-value="res_company"/>
+                            <t t-set="partner" t-value="res_partner"/>
+                            <br/>
+                            <br/>
+                            <div class="row">
+                                <table class="table table-borderless">
+                                    <tr>
+                                        <td>
+                                            <img src="/ssol_od_mrp_customization/static/src/img/header_footer/new_head.png"
+                                                 width="140px"
+                                                 height="60px"
+                                                 style="padding-left: 20px;"/>
+                                        </td>
+                                        <td style="vertical-align: middle; padding-left: 20px;">
+                                            <span style="font-size: 30px; font-weight: bold; color: #c00000">
+                                                <t t-esc="o.company_id.name"/>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="row" style="text-align: center;">
+                                <span style="font-size: 24px; font-weight: bold; text-decoration: underline; display: block;">
+                                    INSPECTION / TEST REPORT
+                                </span>
+                            </div>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 5px; width: 8%;">
+                                        Ref No:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 67%;">
+                                        <t t-esc="o.ref_noc"/>
+                                    </td>
+                                    <td style="text-align: right; width: 10%;">
+                                        Date:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 15%;">
+                                        <t t-esc="o.date_trc"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 5px; width: 10%;">
+                                        FOR M/s:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 40%;">
+                                        <t t-esc="o.for_m_sc"/>
+                                    </td>
+                                    <td style="text-align: right; width: 10%;">
+                                        PO #:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 15%;">
+                                        <t t-esc="o.po_number_c"/>
+                                    </td>
+                                    <td style="text-align: right; width: 10%;">
+                                        Dated:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 15%;">
+                                        <t t-esc="o.dated_trc"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 5px; width: 10%;">
+                                        Add:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 90%;">
+                                        <t t-esc="o.address_trc"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 20%;">
+                                        PRODUCT NAME:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 20%;">
+                                        <t t-esc="o.product_id.name"/>
+                                    </td>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 15%;">
+                                        Model / Make:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 22%;">
+                                        <t t-esc="o.model_make"/>
+                                    </td>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 13%;">
+                                        Cooler ID#:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 10%;">
+                                        <t t-esc="o.cooler_id"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless" style="table-layout: fixed">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 20%;">
+                                        Frame Material:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 30%;">
+                                        <t t-esc="o.frame_material"/>
+                                    </td>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 15%;">
+                                        New Frame
+                                    </td>
+                                    <td style="text-align: center; border: 1px solid black; width: 5%;">
+                                        <t t-if="o.frame == 'new_frame'">✔</t>
+                                        <t t-if="o.frame != 'new_frame'">✘</t>
+                                    </td>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 15%;">
+                                        OLD Frame:
+                                    </td>
+                                    <td style="text-align: centre; border: 1px solid black; padding-bottom: 0px; width: 5%;">
+                                        <t t-if="o.frame == 'old_frame'">✔</t>
+                                        <t t-if="o.frame != 'old_frame'">✘</t>
+                                    </td>
+                                    <td style="width: 10%">
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless" style="table-layout: fixed">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 25%;">
+                                        End Plate / Tube sheet Material:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 75%;">
+                                        <t t-esc="o.tube_sheet_material"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless" style="table-layout: fixed">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 15%;">
+                                        Stack Size:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 25%;">
+                                        <t t-esc="o.stack_size"/>
+                                    </td>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 15%;">
+                                        No. of Stacks:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 10%;">
+                                        <t t-esc="o.no_of_stacks"/>
+                                    </td>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 15%;">
+                                        Refurbished:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 20%;">
+                                        <t t-esc="o.refurbished"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless" style="table-layout: fixed">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 15%;">
+                                        TUBE Material:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 25%;">
+                                        <t t-esc="o.tube_material"/>
+                                    </td>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 12%;">
+                                        Tube Size:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 28%;">
+                                        <t t-esc="o.tube_size"/>
+                                    </td>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 15%;">
+                                        NO TUBES:
+                                    </td>
+                                    <td style="text-align: left; border: 1px solid black; padding-bottom: 0px; width: 5%;">
+                                        <t t-if="o.no_tubes">✔</t>
+                                        <t t-if="not o.no_tubes">✘</t>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless" style="table-layout: fixed">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 15%;">
+                                        No of Rows:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 10%;">
+                                        <t t-esc="o.no_of_rows"/>
+                                    </td>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 25%;">
+                                        No. of Tubes Each Row
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 20%;">
+                                        <t t-esc="o.no_of_tubes_each_row"/>
+                                    </td>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 20%;">
+                                        Total No. of Tubes:
+                                    </td>
+                                    <td style="text-align: left; border-bottom: 1px solid black; padding-bottom: 0px; width: 10%;">
+                                        <t t-esc="o.total_no_of_tubes"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless" style="table-layout: fixed">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 15%;">
+                                        Length of Tube:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 15%;">
+                                        <t t-esc="o.length_of_tube"/>
+                                    </td>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 25%;">
+                                        Total weight of copper tubes:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 20%;">
+                                        <t t-esc="o.total_weight_tubes"/>
+                                    </td>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 15%;">
+                                        Make/Origin:
+                                    </td>
+                                    <td style="text-align: left; border-bottom: 1px solid black; padding-bottom: 0px; width: 10%;">
+                                        <t t-esc="o.make_origin"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="row"
+                                 style="display: flex; width: 100%; justify-content: space-between; align-items: flex-start;">
+                                <!-- Left Table -->
+                                <table class="table table-borderless"
+                                       style="width: 68%; margin-right: 2%; border-collapse: collapse;">
+                                    <tr>
+                                        <td style="text-align: left; padding-bottom: 2px; width: 20%;">
+                                            COPPER FINS:
+                                        </td>
+
+                                        <td style="text-align: center; border: 1px solid black; width: 5%;">
+                                            <t t-if="o.fins_type == 'copper_fins'">✔</t>
+                                            <t t-if="o.fins_type != 'copper_fins'">✘</t>
+                                        </td>
+                                        <td style="text-align: left; padding-bottom: 2px; width: 20%;">
+                                            ALUMINIUM FINS:
+                                        </td>
+                                        <td style="text-align: left; border: 1px solid black; padding-bottom: 0px; width: 5%;">
+                                            <t t-if="o.fins_type == 'aluminum_fins'">✔</t>
+                                            <t t-if="o.fins_type != 'aluminum_fins'">✘</t>
+                                        </td>
+
+                                        <td style="text-align: left; padding-bottom: 2px; width: 10%;">
+                                            NO FIN:
+                                        </td>
+                                        <td style="text-align: left; border: 1px solid black; padding-bottom: 0px; width: 5%;">
+                                            <t t-if="o.fins_type == 'no_fin'">✔</t>
+                                            <t t-if="o.fins_type != 'no_fin'">✘</t>
+                                        </td>
+                                        <td style="text-align: right; padding-bottom: 2px; width: 15%;">
+                                            FIN COATING
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table class="table"
+                                       style="width: 28%; margin-left: 2%; border: 1px solid black; border-collapse: collapse; text-align: center;">
+                                    <tr>
+                                        <td>
+                                            NICKLE
+                                        </td>
+                                        <td>
+                                            TIN
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <t t-if="o.fin_coating == 'nickle'">✔</t>
+                                            <t t-if="o.fin_coating != 'nickle'">✘</t>
+                                        </td>
+                                        <td>
+                                            <t t-if="o.fin_coating == 'tin'">✔</t>
+                                            <t t-if="o.fin_coating != 'tin'">✘</t>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <table class="table table-borderless" style="table-layout: fixed">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 15%;">
+                                        Fin Detail:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 85%;">
+                                        <span t-field="o.fin_detail"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless" style="table-layout: fixed">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 15%;">
+                                        Total No. Fin:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 15%;">
+                                        <t t-esc="o.total_no_fin"/>
+                                    </td>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 15%;">
+                                        Fins/inch:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 30%;">
+                                        <t t-esc="o.fins_inch"/>
+                                    </td>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 10%;">
+                                        Weight:
+                                    </td>
+                                    <td style="text-align: left; border-bottom: 1px solid black; padding-bottom: 0px; width: 15%;">
+                                        <t t-esc="o.fin_weight"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-borderless" style="table-layout: fixed">
+                                <tr>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 15%;">
+                                        Tube Expand by:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 25%;">
+                                        <t t-esc="o.tube_expand_by"/>
+                                    </td>
+                                    <td style="text-align: left; padding-bottom: 2px; width: 20%;">
+                                        Pressure Test at:
+                                    </td>
+                                    <td style="border-bottom: 1px solid black; width: 25%;">
+                                        <t t-esc="o.pressure_test_at"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="row"
+                                 style="display: flex; width: 100%; justify-content: space-between; align-items: flex-start;">
+
+                                <table class="table table-borderless"
+                                       style="width: 48%; margin-right: 2%; border-collapse: collapse; table-layout: fixed">
+                                    <tr>
+                                        <td style="text-align: center; padding-bottom: 5px; width: 20%;">
+                                            For:
+                                        </td>
+                                        <td style="width: 50%; text-align: left;border-bottom: 1px solid black;">
+                                            <span t-field="o.about_hours_for"/>
+                                        </td>
+                                        <td style="width: 30%">
+                                            Pressure Test:
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table class="table"
+                                       style="width: 48%; margin-left: 2%; border: 1px solid black; border-collapse: collapse; text-align: center;">
+                                    <tr>
+                                        <td style="border: 1px solid black;">Hydraulically</td>
+                                        <td style="border: 1px solid black;">Air</td>
+                                        <td style="border: 1px solid black;">Nitrogen</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid black;">
+                                            <t t-if="o.pressure_test == 'hydraulically'">✔</t>
+                                            <t t-if="o.pressure_test != 'hydraulically'">✘</t>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                            <t t-if="o.pressure_test == 'air'">✔</t>
+                                            <t t-if="o.pressure_test != 'air'">✘</t>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                            <t t-if="o.pressure_test == 'nitrogen'">✔</t>
+                                            <t t-if="o.pressure_test != 'nitrogen'">✘</t>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+
+                            <table class="table"
+                                   style="border: 1px solid black; border-collapse: collapse; width: 100%;">
+                                <tr>
+                                    <td style="border: 1px solid black; text-align: center; font-weight: bold;">
+                                        INSPECTION
+                                    </td>
+                                    <td style="border: 1px solid black; text-align: center; font-weight: bold;">OMERDRAZ
+                                        ENG. CO.
+                                    </td>
+                                    <td style="border: 1px solid black; text-align: center; font-weight: bold;">THIRD
+                                        PARTY INSPECTION
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid black; text-align: center;">Name:</td>
+                                    <td style="border: 1px solid black; text-align: center;">
+                                        <t t-if="o.name_trc">
+                                            <t t-esc="o.name_trc"/>
+                                        </t>
+                                        <t t-if="not o.name_trc">✘</t>
+                                    </td>
+                                    <td style="border: 1px solid black; text-align: center;">
+                                        <t t-if="o.name_trc">
+                                            <t t-esc="o.name_tp_trc"/>
+                                        </t>
+                                        <t t-if="not o.name_tp_trc">✘</t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid black; text-align: center;">Date:</td>
+                                    <td style="border: 1px solid black; text-align: center;">
+                                        <t t-if="o.name_trc">
+                                            <t t-esc="o.date_inspection_trc"/>
+                                        </t>
+                                        <t t-if="not o.date_inspection_trc">✘</t>
+                                    </td>
+                                    <td style="border: 1px solid black; text-align: center;">
+                                        <t t-if="o.name_trc">
+                                            <t t-esc="o.date_inspection_rp_trc"/>
+                                        </t>
+                                        <t t-if="not o.date_inspection_rp_trc">✘</t>
+                                    </td>
+                                </tr>
+                                <tr style="height: 50px;">
+                                    <td style="border: none; vertical-align: middle; text-align: center;">Signature:
+                                    </td>
+                                    <td style="border: 1px solid black; text-align: center;">
+                                        <t t-esc="o.signature_trc"/>
+                                    </td>
+                                    <td style="border: 1px solid black; text-align: center;">
+                                        <t t-esc="o.signature_tp_trc"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </t>
+                    </div>
+
+                    <div class="footer"
+                         style="text-align: center; padding-top: 0px; border-top: 3px solid #f21d21; color: #c00000; font-weight: bold; margin-left: 80px; margin-right: 80px">
+                        <table class="table table-borderless">
+                            Add: 100-S QUAID-E-AZAM INDUSTRIAL ESTATE TOWNSHIP, LAHORE.
+                            <br/>
+                            Web:
+                            <span style="color: #f7b615">www.omerdraz.com.pk/</span>
+                            | E-mail: <span style="color: #f7b615">omerdraz786@hotmail.com</span>| Tel #: 042 – 35119080
+                        </table>
+                    </div>
+
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
+
+

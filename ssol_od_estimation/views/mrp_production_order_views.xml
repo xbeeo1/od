@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mrp_production_form_view_estimation" model="ir.ui.view">
+            <field name="name">mrp.production.inherited.form.estimation</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_tmpl_id']" position="after">
+                    <field name="is_estimation"/>
+                </xpath>
+                <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                    <button name="action_view_estimation" type="object" class="oe_stat_button" invisible="not is_estimation" icon="fa-paper-plane">
+                        View Estimation
+                    </button>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

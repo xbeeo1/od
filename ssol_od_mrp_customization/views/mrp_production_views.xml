@@ -1,0 +1,214 @@
+<odoo>
+  <data>
+
+      <record id="od_mrp_production_form_view_inherited" model="ir.ui.view">
+          <field name="name">mrp.production.view.inherited</field>
+          <field name="model">mrp.production</field>
+          <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+          <field name="arch" type="xml">
+              <xpath expr="//field[@name='user_id']" position="after">
+                  <field name="report_type"/>
+                  <field name="po_number_client"/>
+              </xpath>
+              <xpath expr="//field[@name='state']" position="replace">
+                  <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,quality_check,done"/>
+              </xpath>
+              <xpath expr="//button[@name='button_plan']" position="before">
+                  <button name="action_quality_check" invisible="state != 'confirmed'" string="Quality Check" type="object" class="oe_highlight" data-hotkey="g"/>
+              </xpath>
+
+              <xpath expr="//button['1']" position="attributes">
+                  <attribute name="invisible">state != 'quality_check'</attribute>
+              </xpath>
+              <xpath expr="//button['2']" position="attributes">
+                  <attribute name="invisible">state != 'quality_check'</attribute>
+              </xpath>
+              <xpath expr="//button['3']" position="attributes">
+                  <attribute name="invisible">state != 'quality_check'</attribute>
+              </xpath>
+              <xpath expr="//button['4']" position="attributes">
+                  <attribute name="invisible">state != 'quality_check'</attribute>
+              </xpath>
+
+              <xpath expr="//page[@name='miscellaneous']" position="after">
+                  <page string="Quality Check MS Coil" name="" invisible="report_type == 'test_report_cooler' or report_type == False" class="custom-muted">
+                      <group>
+                          <group>
+                              <field name="ref_no"/>
+                              <field name="for_m_s"/>
+                              <field name="address_tr"/>
+                          </group>
+                          <group>
+                              <field name="date_tr"/>
+                              <field name="po_number"/>
+                              <field name="serial_tr"/>
+                          </group>
+                      </group>
+                      <group>
+                          <group>
+                              <field name="ms_pipe_tube_dia"/>
+                          </group>
+                      </group>
+
+                      <group>
+                            <group>
+                                <field name="ms_pipe_hdg"/>
+                                <field name="overall_coil_lengths"/>
+                                <field name="header_od_dia"/>
+                                <field name="header_connection"/>
+                                <field name="pressure_no_gcc_no"/>
+                                <field name="test_pressure"/>
+                            </group>
+                            <group>
+                                <field name="ref_od_drawing"/>
+                                <field name="overall_coil_height"/>
+                                <field name="overall_header_lengths"/>
+                                <field name="total_coil_in_bundles"/>
+                                <field name="gauge_calibration_dd"/>
+                                <field name="used_for" widget="radio"/>
+                            </group>
+                        </group>
+
+                      <group>
+                          <group>
+                              <field name="pressure_start_time"/>
+                              <field name="pressure_holding_time"/>
+                              <field name="test_result" widget="radio"/>
+                          </group>
+                          <group>
+                              <field name="pressure_end_time"/>
+                              <field name="temp_during_testing"/>
+                              <field name="remarks_tr"/>
+                          </group>
+                      </group>
+
+
+                      <group>
+                          <group string="INSPECTION">
+                              <field name="name_tr" string="Name"/>
+                              <field name="signature_tr"/>
+                              <field name="date_inspection_tr"/>
+                          </group>
+                          <group string="THIRD PARTY INSPECTION">
+                              <field name="name_tp_tr"/>
+                              <field name="signature_tp_tr"/>
+                              <field name="date_inspection_rp_tr"/>
+                          </group>
+                      </group>
+
+                  </page>
+
+                  <page string="Quality Check MS Cooler" name="" invisible="report_type == 'test_report_msc' or report_type == False" class="custom-muted">
+                    <group>
+                        <group>
+                            <field name="ref_noc"/>
+                            <field name="for_m_sc"/>
+                            <field name="dated_trc"/>
+                        </group>
+                        <group>
+                            <field name="date_trc"/>
+                            <field name="po_number_c"/>
+                        </group>
+                    </group>
+
+                      <group>
+                          <group><field name="address_trc"/></group>
+                      </group>
+
+                      <group>
+                        <group>
+                            <field name="model_make"/>
+                            <field name="frame_material"/>
+                            <field name="tube_sheet_material"/>
+                            <field name="no_of_stacks"/>
+                            <field name="tube_material"/>
+                            <field name="no_tubes"/>
+                            <field name="no_of_tubes"/>
+                            <field name="no_of_tubes_each_row"/>
+                            <field name="length_of_tube"/>
+                            <field name="make_origin"/>
+                        </group>
+                        <group>
+                            <field name="cooler_id"/>
+                            <field name="frame"/>
+                            <field name="stack_size"/>
+                            <field name="refurbished"/>
+                            <field name="tube_size"/>
+                            <field name="no_of_rows"/>
+                            <field name="total_no_of_tubes"/>
+                            <field name="total_weight_tubes"/>
+                        </group>
+                    </group>
+
+                      <group>
+                          <group>
+                              <field name="fins_type" widget="radio"/>
+                          </group>
+                          <group>
+                              <field name="fin_coating" widget="radio"/>
+                              <field name="about_hours_for"/>
+                          </group>
+                      </group>
+
+                      <group>
+                          <group><field name="fin_detail"/></group>
+                      </group>
+
+                      <group>
+                          <group>
+                              <field name="total_no_fin"/>
+                              <field name="fin_weight"/>
+                              <field name="pressure_test_at"/>
+                          </group>
+                          <group>
+                              <field name="fins_inch"/>
+                              <field name="tube_expand_by"/>
+                              <field name="pressure_test"/>
+                          </group>
+                      </group>
+
+                      <group>
+                          <group string="INSPECTION">
+                              <field name="name_trc"/>
+                              <field name="signature_trc"/>
+                              <field name="date_inspection_trc"/>
+                          </group>
+                          <group string="THIRD PARTY INSPECTION">
+                              <field name="name_tp_trc"/>
+                              <field name="signature_tp_trc"/>
+                              <field name="date_inspection_rp_trc"/>
+                          </group>
+                      </group>
+
+                  </page>
+              </xpath>
+          </field>
+      </record>
+
+
+
+      <record id="od_mrp_production_form_search_view_inherited" model="ir.ui.view">
+            <field name="name">mrp.production.search.view.inherited</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.view_mrp_production_filter"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//search/field[@name='name']" position="before">
+                    <field name="po_number_client" string="Client PO#"/>
+                </xpath>
+
+                <filter name="todo" position="after">
+                    <filter string="Client PO#" name="po_number_client" domain="[('po_number_client', '!=', False)]"/>
+                </filter>
+
+                <xpath expr="//search/group/filter[@name='product']" position="after">
+                    <filter name="po_number_client" string="Client PO#" context="{'group_by': 'po_number_client'}"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+
+  </data>
+</odoo>

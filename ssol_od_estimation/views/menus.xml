@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+
+
+    <menuitem id="estimation_root"
+              name="Estimations"
+              sequence="10"
+              web_icon="ssol_od_estimation,static/src/images/order_estimation.png"/>
+    <!--groups="ssol_employee_assets.group_employee_assets_access"-->
+
+    <menuitem id="menu_order_estimation_root"
+              name="Order Estimation"
+              parent="ssol_od_estimation.estimation_root"
+              sequence="1"/>
+
+    <menuitem id="menu_order_gi_root"
+              name="GI Material"
+              parent="ssol_od_estimation.estimation_root"
+              sequence="2"/>
+
+    <menuitem id="menu_order_ms_root"
+              name="MS Material"
+              parent="ssol_od_estimation.estimation_root"
+              sequence="3"/>
+
+    <menuitem id="menu_order_ss_root"
+              name="SS Material"
+              parent="ssol_od_estimation.estimation_root"
+              sequence="4"/>
+
+
+    <menuitem id="menu_order_copper_root"
+              name="Copper Material"
+              parent="ssol_od_estimation.estimation_root"
+              sequence="5"/>
+
+
+    <menuitem id="menu_order_aluminium_root"
+              name="Aluminium Material"
+              parent="ssol_od_estimation.estimation_root"
+              sequence="6"/>
+
+    <menuitem id="menu_order_finished_goods_root"
+              name="Finished Goods"
+              parent="ssol_od_estimation.estimation_root"
+              sequence="7"/>
+
+    <menuitem id="menu_order_configuration_root"
+              name="Configuration"
+              parent="ssol_od_estimation.estimation_root"
+              sequence="7"/>
+
+</odoo>

@@ -1,0 +1,46 @@
+.custom-field-color {
+    background-color: #a5e2e7 !important;/* Change text color if needed */
+}
+
+.custom-color {
+    background-color: #a5e2e7 !important; /* Change text color if needed */
+}
+
+
+.custom-field-colors {
+    background-color: #f7cd81 !important;/* Change text color if needed */
+}
+
+/* If you need to target specific field types */
+.o_field_widget.custom-field-color {
+    width: 150px !important; /* Change this to your desired width */
+}
+
+
+.custom-muted {
+    background-color: #7CFC00 !important;
+}
+
+.o_statusbar .o_statusbar_item[data-value="new"] {
+    background-color: #007bff !important;
+    color: white !important;
+}
+
+.o_statusbar .o_statusbar_item[data-value="inprogress"] {
+    background-color: #ffc107 !important;
+    color: black !important;
+}
+
+.o_statusbar .o_statusbar_item[data-value="done"] {
+    background-color: #28a745 !important;
+    color: white !important;
+}
+
+.o_statusbar .o_statusbar_item[data-value="cancel"] {
+    background-color: #dc3545 !important;
+    color: white !important;
+}
+
+
+
+

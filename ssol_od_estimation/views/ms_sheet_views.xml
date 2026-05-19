@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_ms_sheet_form" model="ir.ui.view">
+        <field name="name">ms.sheet.form</field>
+        <field name="model">ms.sheet</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button id="button_draft" name="action_draft" type="object"
+                            string="Set to draft" class="btn-primary" invisible="state not in ['confirmed', 'cancel']"/>
+                    <button id="button_confirmed" name="action_confirmed" type="object" string="Confirmed"
+                            class="btn-secondary" invisible="state not in ['draft']"/>
+                    <button id="button_cancel" name="action_cancel" type="object" string="Cancel"
+                            class="btn-secondary" invisible="state not in ['confirmed']"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="parent_order_id" placeholder='Parent Order'/>
+                            <field name="partner_id" placeholder='Customer'/>
+                            <field name="user_id" placeholder='Responsible'/>
+                            <field name="total_amount" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="order_date" readonly="0" required="1"/>
+                            <field name="attachment"/>
+                            <field name="description" placeholder='Note'/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Ms Sheets" name="ms_sheet_line">
+                                <field name="ms_sheet_line" widget="section_and_note_one2many">
+                                <tree string="Ms Sheets" editable="bottom">
+                                    <field name="currency_id" column_invisible="True"/>
+                                    <field name="company_id" column_invisible="True"/>
+                                    <field name="sr_no" column_invisible="True"/>
+                                    <field name="sr_no_char" column_invisible="True"/>
+                                    <field name="product_id"/>
+                                    <field name="name" optional="hide"/>
+                                    <field name="ms_sheet_size"/>
+                                    <field name="weight_per_sqft"/>
+                                    <field name="length"/>
+                                    <field name="width"/>
+                                    <field name="product_uom_qty" sum="Total"/>
+                                    <field name="weight_fit" column_invisible="False"/>
+                                    <field name="total_weight" sum="Total"/>
+                                    <field name="product_uom_category_id" column_invisible="True"/>
+                                    <field name="product_uom_id" optional="hide"/>
+                                    <field name="price_unit" column_invisible="False"/>
+                                    <field name="price_subtotal" sum="Total"/>
+                                    <field name="cost_price" optional="hide" sum="Total"/>
+                                    <field name="profit_margin" optional="hide"  sum="Total"/>
+                                    <field name="tax_id" widget="many2many_tags" optional="hide"/>
+                                    <field name="amount_taxed" optional="hide" sum="Total"/>
+                                    <field name="discount" optional="hide"/>
+                                    <field name="disc_percentage" optional="hide"/>
+                                    <field name="price_total" sum="Total"/>
+                                </tree>
+                            </field>
+
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ms_sheet_tree" model="ir.ui.view">
+        <field name="name">ms.sheet.form</field>
+        <field name="model">ms.sheet</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1">
+                <field name="parent_order_id"/>
+                <field name="partner_id"/>
+                <field name="order_date"/>
+                <field name="user_id"/>
+                <field name="total_amount" sum="Total"/>
+                <field name="state" widget="badge" decoration-success="state == 'confirmed'" decoration-info="state  == 'draft'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_ms_sheet_calendar" model="ir.ui.view">
+        <field name="name">ms.sheet</field>
+        <field name="model">ms.sheet</field>
+        <field name="arch" type="xml">
+            <calendar string="Order Estimation" date_start="order_date" color="partner_id">
+                <field name="parent_order_id"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_ms_sheet_search" model="ir.ui.view">
+        <field name="name">ms.sheet.search</field>
+        <field name="model">ms.sheet</field>
+        <field name="arch" type="xml">
+            <search string="Search Request">
+                <field name="parent_order_id"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <filter string="Unarchived" name="active" domain="[('active', '=', True)]"/>
+                <group expand="0" string="Group By" colspan="16">
+                    <filter string="Parent Order" name="parent_order_id" context="{'group_by':'parent_order_id'}"/>
+                    <filter string="Customer" name="name" context="{'group_by':'partner_id'}"/>
+                    <filter string="State" name="state" context="{'group_by':'state'}"/>
+                    <filter string="Responsible" name="user_id" context="{'group_by':'user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ms_sheet" model="ir.actions.act_window">
+        <field name="name">MS Sheet</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ms.sheet</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Order!
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_ms_sheet"
+              name="Ms Sheet"
+              parent="ssol_od_estimation.menu_order_ms_root"
+              action="action_ms_sheet"
+              sequence="3"/>
+
+</odoo>

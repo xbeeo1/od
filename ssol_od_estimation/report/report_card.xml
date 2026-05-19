@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="report_employee_asset" model="ir.actions.report">
+        <field name="name">Employee Asset Report</field>
+        <field name="model">employee.asset</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ssol_employee_assets.report_employee_asset_details</field>
+        <field name="report_file">ssol_employee_assets.report_employee_asset_details</field>
+        <field name="binding_model_id" ref="ssol_employee_assets.model_employee_asset"/>
+        <field name="binding_type">report</field>
+    </record>
+
+     <record id="report_asset_details" model="ir.actions.report">
+        <field name="name">Asset Report</field>
+        <field name="model">employee.asset</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ssol_employee_assets.report_asset_details_wizard</field>
+        <field name="report_file">ssol_employee_assets.report_asset_details_wizard</field>
+        <field name="binding_model_id" ref="model_create_asset_report_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>
