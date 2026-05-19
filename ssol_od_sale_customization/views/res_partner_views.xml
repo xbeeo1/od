@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_customer_form_custom" model="ir.ui.view">
+        <field name="name">customer.form.custom</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="partner_strn"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_strn']" position="after">
+                <field name="partner_short"/>
+            </xpath>
+            <xpath expr="//field[@name='vat']" position="attributes">
+                <attribute name="string">NTN</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

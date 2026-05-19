@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_material_type_tree" model="ir.ui.view">
+            <field name="name">material.type.tree</field>
+            <field name="model">material.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form view update -->
+        <record id="view_material_type_form" model="ir.ui.view">
+            <field name="name">material.type.form</field>
+            <field name="model">material.type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="description"/>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="act_window_material_type" model="ir.actions.act_window">
+            <field name="name">Material Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">material.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create Your First Material Type...!
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_material_root"
+                  name="Material"
+                  parent="stock.menu_stock_config_settings"
+                  sequence="3"/>
+
+        <menuitem id="menu_material_type_root"
+                  name="Material Type"
+                  parent="ssol_od_stock_customization.menu_material_root"
+                  action="act_window_material_type"
+                  sequence="1"/>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,43 @@
+<odoo>
+    <template id="bill_quot_report_template">
+        <t t-call="web.html_container">
+            <t t-call="ssol_od_sale_customization.copper_quote_header_footer"/>
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <!-- Set Company and Partner Variables -->
+                    <t t-set="company" t-value="res_company"/>
+                    <t t-set="partner" t-value="res_partner"/>
+
+                    <!-- Subject Centered -->
+                    <center><b><u><span style="font-size:17px">Your Ref: <span t-field="docs.od_ref"/></span></u></b></center>
+                    <center><b><u><span style="font-size:17px">Sub: <span t-field="docs.sub"/></span></u></b></center>
+
+                    <!-- Points and Details Section -->
+                    <div style="width:85%; margin: 0 auto 10px;">
+                        <span t-field="docs.points"/>
+                    </div>
+
+                    <div style="width:75%; margin-left:120px; border-top:1px solid black">
+                         TOTAL PRICE: <span t-field="docs.ex_price"/>
+                         General Sales Tax: <span t-field="docs.ex_price"/>
+                     </div>
+
+                     <div style="width:75%; margin-left:120px">
+                         <span style="border: 1px solid black; padding: 3px; display: inline-block;">
+                             <b><span t-field="docs.ex_price"/></b>
+                         </span>
+                     </div>
+
+
+                    <div style="width:75%; margin-left:120px">
+                        <!-- Closing Remarks -->
+                        <br/><br/>
+                        <span style="font-size:13px">Best Regards For: <b><span t-field="docs.best_regards_for"/></b></span>
+                        <br/>
+                        <span style="font-size:13px; text-align:right"><b><span t-field="docs.gm"/></b></span>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--CUSTOM HEADER FOOTER FOR DELIVERY CHALLAN -->
+
+                <template id="do_header_footer_report_template">
+            <style>
+                @font-face {
+                font-family: 'Roman';
+                src: url('/ssol_od_sale_customization/static/src/fonts/times-new-roman.ttf')
+                format('truetype');
+                }
+                header {
+                font-family: 'Roman', serif;
+                }
+                .font-text {
+                font-family: 'Roman', sans-serif;
+                }
+            </style>
+
+            <div class="header" style="width: 100%; padding: 0; margin: 0; font-family: 'Roman', sans-serif;">
+                <div style="width:100%;padding-top:160px;margin-left:0px;margin-right:10px">
+                    <center>
+                        <b>
+                            <u>
+                                <span style="font-size:20px"><strong>DELIVERY CHALLAN</strong></span>
+                            </u>
+                        </b>
+                    </center>
+                    <div style="width:100%; margin-left:30px; font-weight: bold; font-size:20px">
+                        <div style="width: 80%; float:left;">
+                            <u>
+                                <span>DC:
+                                    <span style="padding-left: 18px;" t-field="docs.name"/>
+                                </span>
+                                <br/>
+                            </u>
+                        </div>
+                        <div style="width: 20%; padding-left: 0px; float: right">
+                            <span>Date:
+                                <b>
+                                    <span t-field="docs.scheduled_date" t-options='{"format": "dd-MM-yyyy"}'/>
+                                </b>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div style="width:100%; margin-left:30px; font-size:20px">
+                        <br/>
+                        <br/>
+                        <span><b>Attn:</b></span>
+                        <b><span style="padding-left: 9px;" t-field="docs.partner_id.name"/></b>
+                        <br/>
+                        <i><span style="font-weight: normal; padding-left: 53px;" t-field="docs.partner_id.title.name"/></i>
+                        <br/><br/>
+
+                        <span><b>M/s:</b></span>
+                        <t t-if="docs.partner_id.company_name">
+                            <b><span style="padding-left: 13px;" t-field="docs.partner_id.company_name"/></b>
+                        </t>
+                        <t t-if="docs.partner_id.parent_id.name">
+                            <b><span style="padding-left: 13px;" t-field="docs.partner_id.parent_id.name"/></b>
+                        </t>
+
+                        <table class="table table-borderless table-sm" style="color: black; margin: 0; border-spacing: 0;">
+                            <tr style="margin: 0; padding: 0;">
+                                <td style="width: 6%; white-space: nowrap; vertical-align: top; padding: 2px;">
+                                    <b>
+                                        <span>Add:</span>
+                                    </b>
+                                </td>
+                                <td style="width: 20%; white-space: nowrap; vertical-align: top; padding: 2px;">
+                                    <t t-if="docs.partner_id.contact_address">
+                                        <span t-field="docs.partner_id.street"/>
+                                        <span t-field="docs.partner_id.street2"/>
+                                        <br/>
+                                        <span t-field="docs.partner_id.city"/>
+                                        <span t-field="docs.partner_id.state_id.name"/>
+                                        <span t-field="docs.partner_id.zip"/>
+                                        <br/>
+                                        <span t-field="docs.partner_id.country_id.name"/>
+                                    </t>
+                                </td>
+                                <td style="width: 75%; vertical-align: top; padding: 2px;"/>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <div style="width:100%;" class="footer footer o_standard_footer">
+<!--                <div class="row" style="margin-left: -25px; margin-right: -25px; margin-top: -10px">-->
+<!--                    <table class="table table-borderless" style="width: 100%;">-->
+<!--                        <tr>-->
+<!--                            <td>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--                </div>-->
+            </div>
+        </template>
+
+
+
+
+    </data>
+</odoo>

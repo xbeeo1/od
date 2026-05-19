@@ -1,0 +1,140 @@
+<odoo>
+    <record id="view_order_form_inherit_od" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.od</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+             <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                 <field name="od_ref"/>
+                 <field name="quotation_type"/>
+             </xpath>
+<!--            <xpath expr="//field[@name='payment_term_id']" position="after">-->
+<!--                 <field name="report_type"/>-->
+<!--             </xpath>-->
+            <xpath expr="//page[@name='customer_signature']" position="after">
+
+                <page string="Copper Quotation Info" name="copper_quot_info" invisible="quotation_type != 'copper_quotation'" class="custom-muted">
+
+                    <group>
+                        <field name="sub"/>
+<!--                        <field name="points"/>-->
+                    </group>
+                    <group>
+                        <group string="Details">
+                            <field name="tube_material"/>
+                            <field name="copper_tube_dia"/>
+                            <field name="tube_type"/>
+                            <field name="tube_ends"/>
+                            <field name="fin_material"/>
+                            <field name="fin_temper"/>
+                            <field name="fin_pitch"/>
+                            <field name="fin_ends"/>
+                        </group>
+                        <group string="Details">
+                            <field name="total_no_tubes"/>
+                            <field name="copper_tube_thickness"/>
+                            <field name="tube_pitch"/>
+                            <field name="copper_tube_origin"/>
+                            <field name="fin_thickness"/>
+                            <field name="fin_per_inch"/>
+                            <field name="width_of_fin"/>
+                            <field name="fin_coating"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <field name="detailed_note"/>
+<!--                        <field name="ex_price" placeholder="WORKS LAHORE FACTORY PRICE   @3548000/-"/>-->
+                        <field name="warranty"/>
+                    </group>
+
+                    <group string="TERMS &amp; CONDITIONS">
+                        <field name="note_gst" placeholder="18% G.S.T shall be charged on actual."/>
+                        <field name="payment"/>
+                        <field name="delivery"/>
+                        <field name="validity"/>
+                        <field name="force_majeure"/>
+                        <field name="best_regards_for"/>
+                        <field name="gm"/>
+                        <field name="note_best_regard" placeholder=" THIS IS COMPUTER GENERATED DOCUMENT NO SIGNATURE REQUIRED"/>
+                    </group>
+                </page>
+
+
+
+                <page string="NH3 Quotation Info" name="nh3_quot_info" invisible="quotation_type != 'nh3_quotation'" class="custom-muted">
+                    <group>
+                        <field name="sub"/>
+                        <field name="sub_description" placeholder="Example 1. 02 No." invisible="1"/>
+<!--                        <field name="points"/>-->
+                    </group>
+                    <group string="TERMS &amp; CONDITIONS">
+                        <field name="note_gst" placeholder="18% G.S.T shall be charged on actual."/>
+                        <field name="payment_01"/>
+                        <field name="delivery_01"/>
+                        <field name="validity"/>
+                        <field name="warranty_01"/>
+                        <field name="your_agreements"/>
+                        <field name="force_majeure"/>
+                        <field name="best_regards_for"/>
+                        <field name="gm"/>
+                    </group>
+                </page>
+
+
+
+                <page string="Other Quotation Info" name="other_quot_info" invisible="quotation_type != 'other_quotation'" class="custom-muted">
+
+                    <group>
+                        <field name="sub"/>
+
+<!--                        <field name="points"/>-->
+                    </group>
+
+                    <group>
+                        <group>
+                            <field name="detailed"/>
+                             <field name="sub_description" placeholder="Example 1. 02 No."/>
+<!--                            <field name="ex_price" placeholder="WORKS LAHORE FACTORY PRICE   @3548000/-"/>-->
+                        </group>
+                    </group>
+
+                    <group string="TERMS &amp; CONDITIONS">
+                        <field name="note_gst" placeholder="18% G.S.T shall be charged on actual."/>
+                        <field name="payment"/>
+                        <field name="delivery_02"/>
+                        <field name="validity_01"/>
+                        <field name="warranty_02"/>
+                        <field name="force_majeure"/>
+                        <field name="best_regards_for"/>
+                        <field name="gm"/>
+                        <field name="note_best_regard" placeholder=" THIS IS COMPUTER GENERATED DOCUMENT NO SIGNATURE REQUIRED"/>
+                    </group>
+                </page>
+
+
+
+
+<!--                <page string="Bill Quotation Info" name="nh3_quot_info" invisible="quotation_type != 'bill_quotation'">-->
+<!--                    <group>-->
+<!--                        <field name="sub"/>-->
+<!--                        <field name="points"/>-->
+<!--                        <field name="price_bill_report"/>-->
+<!--                        <field name="general_sales_tax"/>-->
+<!--                        <field name="ex_price" placeholder="WORKS LAHORE FACTORY PRICE   @3548000/-"/>-->
+<!--                        <field name="note_bill_report"/>-->
+<!--                        <field name="best_regards_for"/>-->
+<!--                        <field name="gm"/>-->
+<!--                    </group>-->
+
+
+
+<!--                </page>-->
+
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

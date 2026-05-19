@@ -1,0 +1,252 @@
+<odoo>
+    <template id="nh3_quot_report_template_01">
+        <t t-call="web.html_container">
+            <t t-call="ssol_od_sale_customization.copper_quote_header_footer_01"/>
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="company" t-value="res_company"/>
+                    <t t-set="partner" t-value="res_partner"/>
+
+                    <style>
+                        @font-face {
+                        font-family: 'Roman';
+                        src: url('/ssol_od_sale_customization/static/src/fonts/times-new-roman.ttf')
+                        format('truetype');
+                        }
+                        body {
+                        font-family: 'Roman', serif;
+                        }
+                        .font-text {
+                        font-family: 'Roman', sans-serif;
+                        }
+                    </style>
+
+                    <div class="page" style="font-size:17px; margin-top:30px">
+
+                        <!--IF SUB TITLE -->
+                        <t t-if="o.sub">
+                            <div style="text-align:center; font-weight:bold">
+                                Sub:
+                                <span style="font-size:17px; font-weight:bold; text-decoration: underline"
+                                      t-field="o.sub"></span>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <br/>
+                            <br/>
+                        </t>
+
+
+                        <!-- ORDER LINE TABLE WITH PRODUCT AND INFORMATION-->
+                        <t t-set="serial_number" t-value="0"/>
+                        <t t-set="unit_price" t-value="0"/>
+                        <div style="width:90%; margin-left:55px; font-size:17px; color:black">
+                            <table class="table table-sm o_main_table table-borderless" name="sale_line_table"
+                                   style="font-size: 17px; border-collapse: collapse; table-layout: fixed; width: 100%; font-size:17px; margin: 0;">
+                                <tbody class="sale_tbody">
+                                    <t t-foreach="o.order_line.sorted(key=lambda l: l.sequence)"
+                                       t-as="line">
+                                        <t t-set="serial_number" t-value="serial_number + 1"/>
+                                        <t t-set="unit_price" t-value="unit_price + line.price_unit"/>
+                                        <tr style="color:black">
+                                            <td class="text-start"
+                                                style="width: 5%;">
+                                                <b>
+                                                    <span t-esc="serial_number"/>.
+                                                </b>
+                                            </td>
+                                            <td name="sale_line_code" class="text-start"
+                                                style="width: 9%;">
+                                                <u>
+                                                    <b>
+                                                        <span>
+                                                            <span t-field="line.product_uom_qty"
+                                                                  t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 0}"/>
+                                                            No.
+                                                        </span>
+                                                    </b>
+                                                </u>
+                                            </td>
+                                            <td name="sale_line_name" class="text-start" style="width: 86%;">
+                                                <div class="row" style="margin: 0;">
+                                                    <div class="col-7">
+                                                        <span class="fw-bold" style="text-decoration: underline;">
+                                                            <t t-esc="line.product_id.name"/>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-3 text-center">
+                                                        <i>@<t t-esc="int(line.price_unit or 0)"/>/_
+                                                        </i>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <t t-esc="'{:.2f}'.format(line.price_subtotal or 0)"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row" style="margin: 0;">
+                                                    <div class="col-12">
+                                                        <span t-field="line.name"/>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        <!-- PRICING TOTAL SECTION -->
+                        <div style="padding-left: 174px; padding-right: 0px; width:100%; margin: 0; color:black">
+                            <table style="width: 93%; border: 1px solid black; border-collapse: collapse;">
+                                <tr>
+                                    <td style="width: 48%; padding: 3px; font-weight: bold; white-space: nowrap;  border-left: none; border-right: none;">
+                                        EX - WORKS LAHORE FACTORY PRICE.
+                                    </td>
+                                    <td style="width: 25%; padding: 3px; text-align: center; white-space: nowrap;  border-left: none; border-right: none;">
+                                        <t t-if="serial_number == 1">
+                                            <i>@<span t-esc="unit_price"
+                                                      t-options='{"widget": "float", "precision": 0}'/>/-
+                                            </i>
+                                        </t>
+                                    </td>
+                                    <td style="width: 25%; padding: 3px; font-weight: bold; text-align: center; white-space: nowrap; border-left: none; border-right: none;">
+                                        <span t-field="o.amount_untaxed"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+
+                        <!-- TERMS &amp; CONDITIONS -->
+                        <div style="padding-top:2px; width:100%; margin-left:0px; margin-right:0px; margin: 0">
+                            <center>
+                                <span style="font-weight: bold; text-decoration: underline;">
+                                    TERMS &amp; CONDITIONS
+                                </span>
+                            </center>
+                        </div>
+
+                        <!-- NOTE -->
+                        <t t-if="o.note_gst">
+                            <div class="row" style="width:90%; margin-left:55px; margin-right:10px;">
+                                <div class="col-2" style="font-weight: bold; text-decoration: underline;">
+                                    NOTE:
+                                </div>
+                                <div class="col-10" style="padding-left:10px; line-height: 0.7;">
+                                    <span t-field="o.note_gst"/>
+                                </div>
+                            </div>
+                        </t>
+
+                        <!-- PAYMENT -->
+                        <t t-if="o.payment_01">
+                            <div class="row" style="width:90%; margin-left:55px; margin-right:10px;">
+                                <div class="col-2" style="font-weight: bold; text-decoration: underline;">
+                                    PAYMENT:
+                                </div>
+                                <div class="col-10" style="padding-left:10px; line-height: 0.7;">
+                                    <span t-field="o.payment_01"/>
+                                </div>
+                            </div>
+                        </t>
+
+                        <!-- DELIVERY -->
+                        <t t-if="o.delivery_01">
+                            <div class="row" style="width:90%; margin-left:55px; margin-right:10px;">
+                                <div class="col-2" style="font-weight: bold; text-decoration: underline;">
+                                    DELIVERY:
+                                </div>
+                                <div class="col-10" style="padding-left:10px; line-height: 0.7;">
+                                    <span t-field="o.delivery_01"/>
+                                    <span style="font-size:12px;">(Delivery not included)</span>
+                                </div>
+                            </div>
+                        </t>
+
+                        <!-- VALIDITY -->
+                        <t t-if="o.validity">
+                            <div class="row" style="width:90%; margin-left:55px; margin-right:10px;">
+                                <div class="col-2" style="font-weight: bold; text-decoration: underline;">
+                                    VALIDITY:
+                                </div>
+                                <div class="col-10" style="padding-left:10px; line-height: 0.7;">
+                                    <span t-field="o.validity"/>
+                                </div>
+                            </div>
+                        </t>
+
+                        <!-- WARRANTY -->
+                        <t t-if="o.warranty_01">
+                            <div class="row" style="width:90%; margin-left:55px; margin-right:10px; margin-top:2px;">
+                                <div class="col-2" style="font-weight: bold; text-decoration: underline;">
+                                    WARRANTY:
+                                </div>
+                                <div class="col-10" style="padding-left:10px; line-height: 0.7;">
+                                    <span t-field="o.warranty_01"/>
+                                </div>
+                            </div>
+                        </t>
+
+
+                        <div style="width:85%; margin-left: 55px; margin-bottom: 0px">
+
+                            <!-- YOURS ARRANGEMENT -->
+                            <t t-if="o.your_agreements">
+                                <div style="width: 100%; padding-right:0px; margin-top:5px;">
+                                    <span style="font-weight: bold; text-decoration: underline; line-height: 1;">YOURS
+                                        ARRANGEMENT:
+                                    </span>
+                                    <br/>
+                                    <div style="margin-left:70px;">
+                                        <span style="font-size: 15px;line-height: 0.5;" t-field="o.your_agreements"/>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <!-- FORCE MAJEURE -->
+                            <t t-if="o.force_majeure">
+                                <div style="width: 100%; padding-right:0px; margin-top:5px">
+                                    <span style="font-weight: bold; text-decoration: underline; line-height: 1;">FORCE
+                                        MAJEURE:
+                                    </span>
+                                    <br/>
+                                    <div style="margin-left:70px;">
+                                        <span style="font-size: 15px;line-height: 0.5;" t-field="o.force_majeure"/>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <!-- Best Regards -->
+                            <div style="width: 100%; padding-right:0px; margin-top:15px">
+                                <t t-if="o.best_regards_for">
+                                    <div class="text-start" style="font-size:18px; margin-left: 10px">
+                                        Best Regards
+                                        <br/>
+                                        <span style="display:inline-block;">
+                                            For:
+                                            <b>
+                                                <span style="display:inline-block;" t-esc="o.best_regards_for"/>
+                                            </b>
+                                        </span>
+                                    </div>
+                                    <br/>
+                                    <br/>
+                                </t>
+                                <!-- Best Regards -->
+                                <t t-if="o.gm">
+                                    <div class="text-end" float="right" width="100%">
+                                        <span style="font-size:18px; text-align:right">
+                                            <b>
+                                                <span t-field="o.gm"/>
+                                            </b>
+                                        </span>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

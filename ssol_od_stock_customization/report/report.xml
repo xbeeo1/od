@@ -1,0 +1,35 @@
+<odoo>
+    <data>
+
+        <record id="paperformat_delivery_chalan_report" model="report.paperformat">
+            <field name="name">DeliveryChalan Report Paper Format</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">80</field>
+            <field name="margin_bottom">20</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">80</field>
+            <field name="dpi">90</field>
+        </record>
+
+
+        <record id="action_delivery_chalan_report" model="ir.actions.report">
+            <field name="name">Delivery Chalan</field>
+            <field name="model">stock.picking</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">ssol_od_stock_customization.delivery_chalan_report_template</field>
+            <field name="report_file">ssol_od_stock_customization.delivery_chalan_report_template</field>
+            <field name="paperformat_id" ref="ssol_od_stock_customization.paperformat_delivery_chalan_report"/>
+            <field name="binding_model_id" ref="stock.model_stock_picking"/>
+            <field name="binding_type">report</field>
+            <field name="print_report_name">(object.name)</field>
+        </record>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <template id="delivery_chalan_report_template">
+            <t t-call="web.basic_layout">
+                <div class="page" style="margin-left: 20px; margin-right: 20px; font-size: 12px;">
+                    <t t-foreach="docs" t-as="o">
+                        <t t-call="web.html_container">
+                            <t t-call="ssol_od_stock_customization.do_header_footer_report_template"/>
+                            <t t-foreach="docs" t-as="o">
+                                <t t-set="company" t-value="res_company"/>
+                                <t t-set="partner" t-value="res_partner"/>
+                                <style>
+                                    @font-face {
+                                    font-family: 'Roman';
+                                    src: url('/ssol_od_sale_customization/static/src/fonts/times-new-roman.ttf')
+                                    format('truetype');
+                                    }
+                                    body {
+                                    font-family: 'Roman', serif;
+                                    }
+                                    .font-text {
+                                    font-family: 'Roman', sans-serif;
+                                    }
+                                </style>
+                                <br/>
+
+                                <div style="font-size:20px;width:100%;margin-top:70px;">
+                                    <div class="row">
+                                        <center>
+                                            <b>
+                                                <span style="font-size:20px;">Your Ref:
+                                                    <u>
+                                                        <span t-field="o.dc_number"/>
+                                                    </u>
+                                                </span>
+                                            </b>
+                                            <br/>
+                                            <br/>
+                                            <b>
+                                                <span style="font-size:20px;">Sub:
+                                                    <u>
+                                                        <span t-field="o.do_sub"/>
+                                                    </u>
+                                                </span>
+                                            </b>
+                                        </center>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div style="font-size:20px ; width:100% ;margin-left:37px; margin-right:10px">
+                                    <table class="table table-sm o_main_table table-borderless" name="sale_line_table" style="font-size: 20px; border-collapse: collapse; table-layout: fixed; width: 100%;">
+                                        <tbody class="sale_tbody">
+                                            <t t-set="serial_number" t-value="0"/>
+                                            <t t-foreach="o.move_ids_without_package" t-as="line">
+                                                <t t-set="serial_number" t-value="serial_number + 1"/>
+                                                <tr style="color:black;">
+                                                    <td class="text-start"
+                                                        style="width: 5%;">
+                                                        <b>
+                                                            <span t-esc="serial_number"/>.
+                                                        </b>
+                                                    </td>
+                                                    <td name="sale_line_code" class="text-start"
+                                                        style="width: 9%;">
+                                                        <u>
+                                                            <b>
+                                                                <span>
+                                                                    <span t-field="line.product_uom_qty"
+                                                                          t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 0}"/>
+                                                                    No.
+                                                                </span>
+                                                            </b>
+                                                        </u>
+                                                    </td>
+                                                    <td name="sale_line_name" class="text-start" style="width: 86%;">
+                                                        <span style="text-decoration: underline; font-weight:bold" t-field="line.product_id.name"/>
+                                                        <br/>
+                                                        <span t-field="line.description_picking"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+
+
+                                    <t t-if="o.sending_material_through">
+                                        <div style="width:100%;margin-left: 45px; padding-right: 10px;">
+                                            <span style="font-weight:normal">
+                                                <span style="padding-left:40px;">We are sending above mentioned material through :</span>
+                                                <span style="border-bottom:1px solid black; font-weight:bold"
+                                                      t-field="o.sending_material_through"/>
+                                            </span>
+                                        </div>
+                                        <br/>
+                                    </t>
+
+
+
+                                    <t t-if="o.freight_rent_advance">
+                                        <div style="width:80%;margin-left: 45px;">
+                                            <span style=" font-weight:bold">
+                                                FREIGHT :
+                                                <span style="border-bottom:1px solid black"
+                                                      t-field="o.freight_rent_advance"/>
+                                            </span>
+                                            <br/>
+                                            <br/>
+                                            <span t-field="o.do_note"/>
+                                        </div>
+                                    </t>
+
+                                 </div>
+
+
+
+                                <br/>
+                                <br/>
+                                <div style="width:100%;margin-left: 20px ; font-size:20px;">
+                                    <span>
+                                        Thank you,
+                                        <br/>
+                                        Regards,
+                                        <br/>
+                                        <span>For.
+                                            <span style="font-weight:bold" t-field="o.regard_for"/>
+                                        </span>
+                                    </span>
+                                </div>
+
+                                <br/>
+                                <br/>
+                                <br/>
+                                <span style="font-weight:bold;margin-left: 20px; font-size:20px;">ZIYAD ZAHID MUGHAL</span>
+
+                            </t>
+                        </t>
+                    </t>
+                </div>
+            </t>
+        </template>
+
+    </data>
+</odoo>
+
+

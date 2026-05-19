@@ -1,0 +1,97 @@
+<odoo>
+    <template id="bill_quot_report_template">
+        <t t-call="web.html_container">
+            <t t-call="ssol_od_sale_customization.bill_header_footer_01"/>
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="company" t-value="res_company"/>
+                    <t t-set="partner" t-value="res_partner"/>
+                    <style>
+                        @font-face {
+                        font-family: 'Roman';
+                        src: url('/ssol_od_sale_customization/static/src/fonts/times-new-roman.ttf')
+                        format('truetype');
+                        }
+                        header {
+                        font-family: 'Roman', serif;
+                        }
+                        .font-text {
+                        font-family: 'Roman', sans-serif;
+                        }
+                    </style>
+                    <div class="page" style="font-size:17px; margin-top:0px; font-family: 'Roman', sans-serif;">
+                        <center>
+                            <b>
+
+                                <span style="font-size:17px">Your Ref:
+                                    <u>
+                                        <span t-field="o.od_ref"/>
+                                    </u>
+                                </span>
+                            </b>
+                        </center>
+                        <br/>
+                        <center>
+                            <b>
+                                <span style="font-size:17px">Sub:
+                                    <u>
+                                        <span t-field="o.sub"/>
+                                    </u>
+                                </span>
+                            </b>
+                        </center>
+                        <br/>
+
+
+                        <div style="width:75%; margin-left:120px; margin: 0 auto 10px;">
+                            <span t-field="o.points"/>
+                        </div>
+
+
+                        <div style="width:75%; margin-left:120px; border-top:1px solid black; padding-top:5px;padding-bottom:5px; ">
+                            TOTAL PRICE:
+                            <span t-field="o.price_bill_report"/>
+                            <br/>
+                            <br/>
+                            General Sales Tax:
+                            <span t-field="o.general_sales_tax"/>
+                        </div>
+
+                        <div style="width:75%; margin-left:120px">
+                            <span style="border: 1px solid black; padding: 3px; display: inline-block;">
+                                <b>
+                                    <span t-field="o.ex_price"/>
+                                </b>
+                            </span>
+                            <br/>
+                            <br/>
+                            <span t-field="o.note_bill_report"/>
+                        </div>
+                        <div style="width:100%;margin-top:0px;margin-left:60px;margin-right:10px">
+                            <br/>
+                            <br/>
+                            <span style="">Best Regards
+                                <br/>
+                                For:
+                                <b>
+                                    <span t-field="o.best_regards_for"/>
+                                </b>
+                            </span>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <span style="">
+                                <b>
+                                    <span t-field="o.gm"/>
+                                </b>
+                            </span>
+                            <br/>
+                            <br/>
+                            <span>D/A - Original Sales Tax Invoice</span>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

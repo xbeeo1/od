@@ -1,0 +1,65 @@
+<odoo>
+    <data>
+
+        <record id="od_product_product_product_tree_view_inherit" model="ir.ui.view">
+            <field name="name">product.template.only.form.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="material_type" invisible="0"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="od_roduct_product_normal_form_view_inherit" model="ir.ui.view">
+            <field name="name">product.product.normal.form.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_tooltip']" position="before">
+                    <field name="material_type" invisible="0"/>
+                </xpath>
+                <xpath expr="//page[@name='inventory']" position="after">
+                    <page name="conversion_id_value" string="Conversion Value">
+                        <group>
+                            <group>
+                                <field name="conversion_value"/>
+                            </group>
+                            <group>
+                                <field name="conversion_uom_id"/>
+                            </group>
+                            <group>
+                                <field name="converted_value"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="od_stock_product_search_form_view_inherit" model="ir.ui.view">
+            <field name="name">product.product.search.stock.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="stock.stock_product_search_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search/field[@name='name']" position="after">
+                    <field name="material_type"/>
+                </xpath>
+                <xpath expr="//search/filter[@name='services']" position="after">
+                    <filter name="material_type" string="Material Type" domain="[('material_type', '!=', False)]"/>
+                </xpath>
+
+                <xpath expr="//search/group/filter[@name='type']" position="after">
+                    <filter name="material_type" string="Material Type" context="{'group_by': 'material_type'}"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+
+
+    </data>
+</odoo>

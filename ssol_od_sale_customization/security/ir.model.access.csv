@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_so_copper_line,so.copper.line,model_so_copper_line,base.group_user,1,1,1,1
+access_so_nh3_line,so.nh3.line,model_so_nh3_line,base.group_user,1,1,1,1
+access_soo_quotation_line,soo.quotation.line,model_soo_quotation_line,base.group_user,1,1,1,1

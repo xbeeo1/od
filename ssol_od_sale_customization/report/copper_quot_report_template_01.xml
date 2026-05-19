@@ -1,0 +1,309 @@
+<odoo>
+    <data>
+        <template id="copper_quot_report_template_01">
+            <t t-call="ssol_od_sale_customization.copper_quote_header_footer_01"/>
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <t t-foreach="docs" t-as="o">
+                        <t t-set="company" t-value="res_company"/>
+                        <t t-set="partner" t-value="res_partner"/>
+                        <style>
+                            @font-face {
+                            font-family: 'Roman';
+                            src: url('/ssol_od_sale_customization/static/src/fonts/times-new-roman.ttf')
+                            format('truetype');
+                            }
+                            body {
+                            font-family: 'Roman', serif;
+                            }
+                            .font-text {
+                            font-family: 'Roman', sans-serif;
+                            }
+                        </style>
+
+                        <div class="page" style="font-size:17px; margin-top:30px">
+
+
+                            <!--IF SUB TITLE -->
+                            <t t-if="o.sub">
+                                <div style="text-align:center; font-weight:bold">
+                                    Sub:
+                                    <span style="font-size:17px; font-weight:bold; text-decoration: underline"
+                                          t-field="o.sub"></span>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <br/>
+                                <br/>
+                            </t>
+
+                            <!-- ORDER LINE TABLE WITH PRODUCT AND INFORMATION-->
+                            <t t-set="serial_number" t-value="0"/>
+                            <t t-set="unit_price" t-value="0"/>
+                            <div style="width:90%; margin-left:55px; font-size:17px; color:black">
+                                <table class="table table-sm o_main_table table-borderless" name="sale_line_table"
+                                       style="font-size: 17px; border-collapse: collapse; table-layout: fixed; width: 100%; font-size:17px; margin: 0;">
+                                    <tbody class="sale_tbody">
+                                        <t t-foreach="o.order_line.sorted(key=lambda l: l.sequence)"
+                                           t-as="line">
+                                            <t t-set="serial_number" t-value="serial_number + 1"/>
+                                            <t t-set="unit_price" t-value="unit_price + line.price_unit"/>
+                                            <tr style="color:black">
+                                                <td class="text-start"
+                                                    style="width: 5%;">
+                                                    <b>
+                                                        <span t-esc="serial_number"/>.
+                                                    </b>
+                                                </td>
+                                                <td name="sale_line_code" class="text-start"
+                                                    style="width: 9%;">
+                                                    <u>
+                                                        <b>
+                                                            <span>
+                                                                <span t-field="line.product_uom_qty"
+                                                                      t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 0}"/>
+                                                                No.
+                                                            </span>
+                                                        </b>
+                                                    </u>
+                                                </td>
+                                                <td name="sale_line_name" class="text-start" style="width: 86%;">
+                                                    <div class="row" style="margin: 0;">
+                                                        <div class="col-10">
+                                                            <span class="fw-bold" style="text-decoration: underline;">
+                                                                <t t-esc="line.product_id.name"/>
+                                                            </span>
+                                                        </div>
+                                                        <!--                                                        <div class="col-3 text-center">-->
+                                                        <!--                                                            <i>@<t t-esc="line.price_unit"/>/_-->
+                                                        <!--                                                            </i>-->
+                                                        <!--                                                        </div>-->
+                                                        <div class="col-2">
+                                                            <!--                                                            <t t-esc="line.price_subtotal"/>-->
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="margin: 0;">
+                                                        <div class="col-12">
+                                                            <span t-field="line.name"/>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                            <!-- DETAILS SECTION -->
+                            <div style="width:100%; margin: 0; color:black">
+                                <span style="padding-left: 174px; font-weight:bold">
+                                    DETAIL:
+                                </span>
+                            </div>
+
+                            <!-- DETAILS SECTION FIELDS-->
+                            <div style="width:75%; margin-left:210px; margin-right:10px">
+
+                                <!-- LEFT DIV-->
+                                <div style="width:50%; float:left">
+                                    <span>
+                                        <b>TUBE</b>
+                                        material:
+                                    </span>
+                                    <span style="padding-left:20px" t-field="o.tube_material"/>
+                                    <br/>
+                                    <span>Tube type:</span>
+                                    <span style="padding-left:54px" t-field="o.tube_type"/>
+                                    <br/>
+                                    <span>Tube Ends:</span>
+                                    <span style="padding-left:50px" t-field="o.tube_ends"/>
+                                    <br/>
+                                    <span><b>FIN</b>material:
+                                    </span>
+                                    <span style="padding-left:37px" t-field="o.fin_material"/>
+                                    <br/>
+                                    <span>Fin temper:</span>
+                                    <span style="padding-left:50px" t-field="o.fin_temper"/>
+                                    <br/>
+                                    <span>Fins Pitch:</span>
+                                    <span style="padding-left:56px" t-field="o.fin_pitch"/>
+                                    <br/>
+                                    <span>Fins Ends:</span>
+                                    <span style="padding-left:58px" t-field="o.fin_ends"/>
+
+                                </div>
+
+                                <!-- RIGHT DIV-->
+                                <div style="width:50%; float:right">
+                                    <span>Copper tube Dia:</span>
+                                    <span style="padding-left:52px" t-field="o.copper_tube_dia"/>
+                                    <br/>
+                                    <span>Tube Pitch:</span>
+                                    <span style="padding-left:88px" t-field="o.tube_pitch"/>
+                                    <br/>
+                                    <span>Copper Tube origin:</span>
+                                    <span style="padding-left:30px" t-field="o.copper_tube_dia"/>
+                                    <br/>
+                                    <span>Fin thickness:</span>
+                                    <span style="padding-left:73px" t-field="o.fin_thickness"/>
+                                    <br/>
+                                    <span>Fin Per Inch:</span>
+                                    <span style="padding-left:78px" t-field="o.fin_per_inch"/>
+                                    <br/>
+                                    <span>Width of fins:</span>
+                                    <span style="padding-left:73px" t-field="o.width_of_fin"/>
+                                    <br/>
+                                    <span>Fin Coating:</span>
+                                    <span style="padding-left:82px" t-field="o.fin_coating"/>
+                                </div>
+                            </div>
+
+                            <br/>
+
+                            <!-- NOTE SECTION -->
+                            <t t-if="o.detailed_note">
+                                <div style="font-size: 13px; width:100%; margin: 0; color:black">
+                                    <span style="padding-left: 174px">
+                                        <span style="font-weight:bold">NOTE:</span>
+                                        <span style="padding-left:5px; text-decoration: underline;"
+                                              t-field="o.detailed_note"/>
+                                    </span>
+                                </div>
+                            </t>
+
+                            <!-- PRICING TOTAL SECTION -->
+                            <div style="padding-left: 174px; padding-right: 0px; width:100%; margin: 0; color:black">
+                                <table style="width: 96%; border: 1px solid black; border-collapse: collapse;">
+                                    <tr>
+                                        <td style="width: 48%; padding: 3px; font-weight: bold; white-space: nowrap;  border-left: none; border-right: none;">
+                                            EX - WORKS LAHORE FACTORY PRICE.
+                                        </td>
+                                        <td style="width: 25%; padding: 3px; text-align: center; white-space: nowrap;  border-left: none; border-right: none;">
+                                            <t t-if="serial_number == 1">
+                                                <i>@<span t-esc="unit_price"
+                                                          t-options='{"widget": "float", "precision": 0}'/>/-
+                                                </i>
+                                            </t>
+                                        </td>
+                                        <td style="width: 25%; padding: 3px; font-weight: bold; text-align: center; white-space: nowrap; border-left: none; border-right: none;">
+                                            <span t-field="o.amount_untaxed"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <!-- WARRANTY -->
+                            <t t-if="o.warranty">
+                                <div class="row" style="margin-left:55px; margin-right:10px; margin-top:2px;">
+                                    <div class="col-2" style="font-weight: bold; text-decoration: underline;">
+                                        WARRANTY:
+                                    </div>
+                                    <div class="col-10" style="padding-left:10px; line-height: 1.2;">
+                                        <span t-field="o.warranty"/>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <!-- TERMS & CONDITIONS -->
+                            <div style="padding-top: 10px; padding-bottom: 5px; text-align: center;">
+                                <span style="font-weight: bold; text-decoration: underline;">
+                                    TERMS &amp; CONDITIONS
+                                </span>
+                            </div>
+
+                            <!-- NOTE -->
+                            <t t-if="o.note_gst">
+                                <div class="row" style="margin-left:55px; margin-right:10px;">
+                                    <div class="col-2" style="font-weight: bold; text-decoration: underline;">
+                                        NOTE:
+                                    </div>
+                                    <div class="col-10" style="padding-left:10px; line-height: 1.2;">
+                                        <span t-field="o.note_gst"/>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <!-- PAYMENT -->
+                            <t t-if="o.payment">
+                                <div class="row" style="margin-left:55px; margin-right:10px;">
+                                    <div class="col-2" style="font-weight: bold; text-decoration: underline;">
+                                        PAYMENT:
+                                    </div>
+                                    <div class="col-10" style="padding-left:10px; line-height: 1.2;">
+                                        <span t-field="o.payment"/>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <!-- DELIVERY -->
+                            <t t-if="o.delivery">
+                                <div class="row" style="margin-left:55px; margin-right:10px;">
+                                    <div class="col-2" style="font-weight: bold; text-decoration: underline;">
+                                        DELIVERY:
+                                    </div>
+                                    <div class="col-10" style="padding-left:10px; line-height: 1.2;">
+                                        <span t-field="o.delivery"/>
+                                        <span style="font-size:12px;">(Delivery not included)</span>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <!-- VALIDITY -->
+                            <t t-if="o.validity">
+                                <div class="row" style="margin-left:55px; margin-right:10px;">
+                                    <div class="col-2" style="font-weight: bold; text-decoration: underline;">
+                                        VALIDITY:
+                                    </div>
+                                    <div class="col-10" style="padding-left:10px; line-height: 1.2;">
+                                        <span t-field="o.validity"/>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <!-- FORCE MAJEURE -->
+                            <div style="width: 90%; margin-left:55px; padding-right:0px">
+                                <span style="font-size: 12px; line-height: 1;">
+                                    <t t-if="o.force_majeure">
+                                        <u>
+                                            <b>FORCE MAJEURE:</b>
+                                        </u>
+                                        <br/>
+                                        <span style="padding-left:50px; font-size: 12px; line-height: 0.3"
+                                              t-field="o.force_majeure"/>
+                                    </t>
+                                </span>
+                                <br/>
+                                <br/>
+                                <t t-if="o.best_regards_for">
+                                    <span style="">Best Regards</span>
+                                    <br/>
+                                    <span style="display:inline-block">For.
+                                        <span style="display:inline-block; font-weight: bold"
+                                              t-field="o.best_regards_for"/>
+                                    </span>
+                                </t>
+                                <br/>
+                                <br/>
+                                <t t-if="o.gm">
+                                    <div style="margin:0; padding:0">
+                                        <b>
+                                            <span t-field="o.gm"/>
+                                        </b>
+                                    </div>
+                                </t>
+                                <t t-if="o.note_best_regard">
+                                    <div style="margin-top: -10px ;font-size:10px; color:red; font-weight: bold;display:inline-block;">
+                                        NOTE:
+                                        <span t-field="o.note_best_regard" style="display:inline-block;"/>
+                                    </div>
+                                </t>
+                            </div>
+
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
