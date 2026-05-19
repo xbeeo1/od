@@ -31,6 +31,7 @@
         'report/report.xml',
         'report/custom_header_footer_report.xml',
         'report/delivery_chalan_report_template.xml',
+        'report/custom_report_deliveryslip.xml',
     ],
 
     'license': 'LGPL-3',

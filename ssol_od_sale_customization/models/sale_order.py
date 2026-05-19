@@ -24,7 +24,7 @@ class SaleOrderInheritOD(models.Model):
 
 
     quotation_type = fields.Selection(string="Quotation Type", selection=[('copper_quotation', 'Copper Quotation'), ('nh3_quotation', 'NH3 Quotation'),('other_quotation', 'Other Quotation')])
-    sub = fields.Char(string="Sub:", default='CHARGE AIR COOLER WARTSILLA')
+    sub = fields.Char(string="Sub:",)
     sub_description = fields.Text(string="Note")
 
     report_type = fields.Selection(string="Report Type", selection=[('letter', 'With Letterhead'), ('w_letter', 'Without Letterhead'), ], required=False, )
@@ -60,7 +60,7 @@ class SaleOrderInheritOD(models.Model):
     delivery_01 = fields.Text(string="DELIVERY:", default='within 16 to 18 working weeks, after receiving valued PO & Advance payment.')
     validity = fields.Text(string="VALIDITY:", default='07 days only OR due to extreme forex fluctuation, above mentioned prices are subject to change based on market situation.')
     validity_01 = fields.Text(string="VALIDITY:", default='04 days only or due to extreme forex fluctuation, rise in USD > Rs. 2 will reflect in above mentioned Prices without any intimation')
-    force_majeure = fields.Text(string="FORCE MAJEURE:", default='OMERDRAZ ENGINEERING COMPANYwill not be responsible for failure to meet the delivery schedules of the contract nor for any losses or damages to the Client (or any third party/person) occasioned by delay in the performance or the non-performance of any OMERDRAZ’s obligations under the order, or by loss of or any damage to the material when caused directly or indirectly by, or in any manner arising from the act of God, acts of government or military authority, casualty, riots, Lockdown, strikes, sabotage, terrorism or any other similar or different cause or causes beyond OMERDRAZ’s control or of its suppliers or sub-contractors / vendors. Force Majeure will extend the time of OMERDRAZ’s execution of the work, and give it the right to make price adjustments, if necessary, under the contract by the effects of such Force Majeure event considering the necessary restart period on the performance of OMERDRAZ’s or its suppliers or sub-contractors / vendors.')
+    force_majeure = fields.Text(string="FORCE MAJEURE:", default='OMERDRAZ ENGINEERING COMPANY will not be responsible for failure to meet the delivery schedules of the contract nor for any losses or damages to the Client (or any third party/person) occasioned by delay in the performance or the non-performance of any OMERDRAZ’s obligations under the order, or by loss of or any damage to the material when caused directly or indirectly by, or in any manner arising from the act of God, acts of government or military authority, casualty, riots, Lockdown, strikes, sabotage, terrorism or any other similar or different cause or causes beyond OMERDRAZ’s control or of its suppliers or sub-contractors / vendors. Force Majeure will extend the time of OMERDRAZ’s execution of the work, and give it the right to make price adjustments, if necessary, under the contract by the effects of such Force Majeure event considering the necessary restart period on the performance of OMERDRAZ’s or its suppliers or sub-contractors / vendors.')
 
     best_regards_for = fields.Text(string="Best Regards For", default='OMERDRAZ ENGINEERING CO LAHORE.')
     note_best_regard = fields.Text(string="NOTE", default='THIS IS COMPUTER GENERATED DOCUMENT NO SIGNATRE REQUIRED')
@@ -68,7 +68,7 @@ class SaleOrderInheritOD(models.Model):
 
     # NH3 Quotation Extra Fields
     # points = fields.Text(string='Points', translate=True)
-    your_agreements = fields.Text(string="YOURS ARRANGEMENT", default='Masonry work (Foundation etc.), Water supply, Electricity supply 3 phase for ammonia plant & up to Penal board Main breakers, water treatment plant if required. Ammonia Gas, Compressor Oil, P.P Glycol. Transportation, any local taxes duties etc, material unloading up to foundations, Accommodation, Food & Medical if required for 3 to 4 workers during work at site, Any Material leftover after commissioning of the Glycol system at site will be the property of the M/s OMERDRAZ ENGINEERING CO. LAHORE. Or any other item which is not clearly mentioned in our quotation will be provide by. Jalal Sons & Co') # after force_majeure
+    your_agreements = fields.Text(string="YOURS ARRANGEMENT", default='Masonry work (Foundation etc.), Water supply, Electricity supply 3 phase for ammonia plant & up to Penal board Main breakers, water treatment plant if required. Ammonia Gas, Compressor Oil, P.P Glycol. Transportation, any local taxes duties etc, material unloading up to foundations, Accommodation, Food & Medical if required for 3 to 4 workers during work at site, Any Material leftover after commissioning of the Glycol system at site will be the property of the M/s OMERDRAZ ENGINEERING CO. LAHORE. Or any other item which is not clearly mentioned in our quotation will be provide by the client.') # after force_majeure
 
 
     # Other Quotation Extra Fields
