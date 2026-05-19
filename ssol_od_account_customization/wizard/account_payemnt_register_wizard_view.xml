@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <record model="ir.ui.view" id="view_account_reg_payment_form_check_pdc">
+        <field name="name">view.account.reg.payment.form.check.pdc</field>
+        <field name="model">account.payment.register</field>
+        <field name="inherit_id" ref="account.view_account_payment_register_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_date']" position="before">
+                <field name="wht_total_amount"/>
+                <field name="wh_tax_percentage"/>
+                <field name="wh_tax_amount" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="bill_quot_report_template">
+            <t t-call="web.html_container">
+                <t t-call="ssol_od_account_customization.bill_header_footer_01"/>
+                <t t-call="web.basic_layout">
+                    <t t-foreach="docs" t-as="o">
+                        <t t-set="company" t-value="res_company"/>
+                        <t t-set="partner" t-value="res_partner"/>
+                        <style>
+                            @font-face {
+                            font-family: 'Roman';
+                            src: url('/ssol_od_sale_customization/static/src/fonts/times-new-roman.ttf')
+                            format('truetype');
+                            }
+                            header {
+                            font-family: 'Roman', serif;
+                            }
+                            .font-text {
+                            font-family: 'Roman', sans-serif;
+                            }
+                        </style>
+                        <div class="page" style="margin-top:0px; font-family: 'Roman', sans-serif;">
+                            <center>
+                                <b>
+
+                                    <span style="font-size:17px">Your Ref:
+                                        <u>
+                                            <span t-field="o.od_ref"/>
+                                        </u>
+                                    </span>
+                                </b>
+                            </center>
+                            <br/>
+                            <center>
+                                <b>
+                                    <span style="font-size:17px">Sub:
+                                        <u>
+                                            <span t-field="o.sub"/>
+                                        </u>
+                                    </span>
+                                </b>
+                            </center>
+                            <br/>
+
+                            <t t-set="serial_number" t-value="0"/>
+                            <t t-set="total_quantity" t-value="0"/>
+                            <t t-set="total_price_subtotal" t-value="0"/>
+                            <t t-set="total_price_subtotal_with_delivery" t-value="0"/>
+                            <t t-set="total_tax_amount" t-value="0"/>
+                            <t t-set="tax_total_01" t-value="0"/>
+                            <t t-set="total_tax_amount_with_delivery" t-value="0"/>
+                            <t t-set="total_price_total" t-value="0"/>
+                            <t t-set="total_price_total" t-value="0"/>
+                            <t t-set="delivery_tax" t-value="0"/>
+                            <div style="width:80%; margin-left:60px; font-size:14px;">
+
+                                <table class="table table-sm o_main_table table-borderless" name="invoice_line_table"
+                                       style="font-size: 12px; border-collapse: collapse; table-layout: fixed; width: 90%; font-size:14px;">
+                                    <tbody class="invoice_tbody">
+                                        <t t-foreach="o.invoice_line_ids.sorted(key=lambda l: l.sequence)"
+                                           t-as="line">
+                                            <t t-set="serial_number"
+                                               t-value="serial_number + 1"/>
+                                            <!--                                    <t t-if="line.product_id.name != 'Delivery Charges'">-->
+                                            <tr style="">
+                                                <td class="text-start"
+                                                    style="width: 5%;">
+                                                    <b>
+                                                        <span t-esc="serial_number"/>
+                                                    </b>
+                                                </td>
+                                                <td name="account_invoice_line_code" class="text-start"
+                                                    style="width: 15%;">
+                                                    <u>
+                                                        <b>
+                                                            <span>
+                                                                <!--                                                                <span t-field="line.quantity"/>-->
+                                                                <span t-field="line.quantity"
+                                                                      t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 0}"/>
+                                                                No.
+                                                            </span>
+                                                        </b>
+                                                    </u>
+                                                </td>
+                                                <td name="account_invoice_line_name" class="text-start"
+                                                    style="width: 80%;">
+                                                    <span t-field="line.product_id.name"/>
+                                                </td>
+                                                <t t-set="total_quantity"
+                                                   t-value="total_quantity + line.quantity"/>
+
+                                                <t t-set="total_price_subtotal"
+                                                   t-value="total_price_subtotal + line.price_subtotal"/>
+
+                                                <t t-set="total_tax_amount"
+                                                   t-value="total_tax_amount + ((line.tax_ids[0].amount / 100) * line.price_subtotal if line.tax_ids else 0)"/>
+                                                <t t-set="total_price_total"
+                                                   t-value="total_price_total + line.price_total"/>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div style="width:60%; margin-left:200px; font-size:14px;">
+                                <table class="table table-sm o_main_table table-borderless" name="invoice_line_table"
+                                       style="font-size: 12px; border-collapse: collapse; table-layout: fixed;font-size:14px;">
+
+                                    <tr class="is-subtotal text-center" style="row-layout: fixed">
+                                        <td class="text-start" style="width: 40%; border-top: 1px solid black">
+                                            <strong>TOTAL PRICE</strong>
+                                        </td>
+                                        <td class="text-start" style="width: 30%; border-top: 1px solid black">
+                                            <strong>
+                                                <span t-esc="o.amount_untaxed"
+                                                      t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
+                                            </strong>
+                                        </td>
+                                        <td class="text-end" style="width: 30%; border-top: 1px solid black">
+                                            <strong>
+                                                <span t-esc="o.amount_untaxed"
+                                                      t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
+                                            </strong>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="border: none;">
+                                        <td class="text-start" style="width: 40%;">
+                                            <strong>GENERAL SALES TAX</strong>
+                                        </td>
+                                        <td class="text-start" style="width: 30%;">
+                                            <strong>
+                                                <span t-esc="', '.join(tax.display_name for tax in o.invoice_line_ids.tax_ids)"/>
+                                            </strong>
+                                        </td>
+                                        <td class="text-end" style="width: 30%;">
+                                            <strong>
+                                                <t t-set="tax_total_01" t-value="total_price_total - o.amount_untaxed"/>
+                                                <span t-esc="tax_total_01"
+                                                      t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
+                                            </strong>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="border: 1px solid black;">
+                                        <td class="text-start" style="width: 40%; border-top: 1px solid black">
+                                            <strong>GRAND TOTAL PRICE</strong>
+                                        </td>
+                                        <td class="text-start" style="width: 30%; border-top: 1px solid black">
+                                            <strong>
+                                                RUPEES
+                                            </strong>
+                                        </td>
+                                        <td class="text-end" style="width: 30%; border-top: 1px solid black">
+                                            <strong>
+                                                <span t-esc="total_price_total"
+                                                      t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
+                                            </strong>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+
+                            <div style="width:75%; margin-left:200px">
+                                <span t-field="o.note_bill_report"/>
+                            </div>
+                            <div style="width:100%;margin-top:0px;margin-left:60px;margin-right:10px">
+                                <br/>
+                                <br/>
+                                <span style="">Best Regards
+                                    <br/>
+                                    For:
+                                    <b>
+                                        <span t-field="o.best_regards_for"/>
+                                    </b>
+                                </span>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <span style="">
+                                    <b>
+                                        <span t-field="o.gm"/>
+                                    </b>
+                                </span>
+                                <br/>
+                                <br/>
+                                <span>D/A - Original Sales Tax Invoice</span>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

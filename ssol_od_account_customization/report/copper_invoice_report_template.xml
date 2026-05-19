@@ -1,0 +1,1300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="cooper_invoice_report_template">
+            <t t-call="web.basic_layout">
+                <div class="page font-text" style="margin-left: 60px; margin-right: 60px; font-size: 11px;">
+                    <t t-foreach="docs" t-as="o">
+                        <style>
+                            @font-face {
+                            font-family: 'Roman';
+                            src: url('/ssol_od_account_customization/static/src/fonts/times-new-roman.ttf')
+                            format('truetype');
+                            }
+                            body {
+                            font-family: 'Roman', serif;
+                            }
+                            .font-text {
+                            font-family: 'Roman', sans-serif;
+                            }
+                        </style>
+
+                        <!--HEADER-->
+                        <t t-set="header_repeat" t-value="0"/>
+                        <div class="row" style="width:100%;">
+                            <table class="table table-borderless" style="table-layout: fixed;">
+                                <tr>
+                                    <td>
+                                        <img src="ssol_od_sale_customization/static/src/img/header_footer/inv_header.png"
+                                             width="400px"
+                                             height="80px"
+                                             style="padding-top: 0px;"/>
+                                    </td>
+                                    <td style="font-size: 14px; padding-top: 20px; padding-right: 20px; text-align: right;"
+                                        class="font-text">
+                                        <span style="border: 2px solid #c00000; color: #c00000; padding: 5px;">
+                                            <b>ORIGINAL</b>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <!--HEADER-->
+
+                        <t t-call="web.html_container">
+                            <t t-foreach="docs" t-as="o">
+                                <t t-set="company" t-value="res_company"/>
+                                <t t-set="partner" t-value="res_partner"/>
+                                <br/>
+                                <br/>
+                                <div class="row">
+                                    <center>
+                                        <b>
+                                            <span style="font-size:18px;">SALES TAX INVOICE</span>
+                                        </b>
+                                    </center>
+                                </div>
+                                <br/>
+                                <table class="table table-borderless table-sm"
+                                       style="width: 30%; float: right; font-weight: bold; font-size:13px; table-layout: fixed;">
+                                    <t t-if="o.company_id.strn">
+                                        <tr>
+                                            <td style="width: 30%">
+                                                <span>STRN #</span>
+                                            </td>
+                                            <td style="width: 70%; font-weight: bold">
+                                                <span t-field="o.company_id.strn"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <t t-if="o.company_id.vat">
+                                        <tr>
+                                            <td>
+                                                NTN #
+                                            </td>
+                                            <td>
+                                                <span t-field="o.company_id.vat"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                                <table class="table table-borderless" style="table-layout: fixed">
+                                    <tr>
+                                        <td style="width: 70%; vertical-align: top;">
+                                            <div class="customer-info">
+                                                <table class="table table-borderless table-sm"
+                                                       style="table-layout: fixed">
+                                                    <t t-if="o.partner_id.name">
+                                                        <tr>
+                                                            <td style="width: 25%; text-align: start;">
+                                                                <strong>Customer Name:</strong>
+                                                            </td>
+                                                            <td class="text-start" style="font-weight: bold">
+                                                                <t t-if="docs.partner_id.company_name">
+                                                                    <span t-field="docs.partner_id.company_name"/>
+                                                                </t>
+                                                                <t t-elif="docs.partner_id.parent_id.name">
+                                                                    <span t-field="docs.partner_id.parent_id.name"/>
+                                                                </t>
+                                                                <t t-elif="docs.partner_id.name">
+                                                                    <span t-field="o.partner_id.name"/>
+                                                                </t>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.partner_id.contact_address">
+                                                        <tr>
+                                                            <td style="text-align: start;">
+                                                                <strong>Delivery Address:</strong>
+                                                            </td>
+                                                            <td class="text-start" style="font-weight: normal">
+                                                                <span t-field="o.partner_id.contact_address"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.territory_id">
+                                                        <tr>
+                                                            <td style="text-align: start;">
+                                                                <strong>Territory:</strong>
+                                                            </td>
+                                                            <td class="text-start" style="font-weight: normal">
+                                                                <span t-field="o.territory_id"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.partner_id.vat">
+                                                        <tr>
+                                                            <td style="text-align: start;">
+                                                                <strong>NTN #:</strong>
+                                                            </td>
+                                                            <td class="text-start" style="font-weight: bold">
+                                                                <span t-field="o.partner_id.vat"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.partner_id.partner_strn">
+                                                        <tr>
+                                                            <td style="text-align: start;">
+                                                                <strong>STRN #:</strong>
+                                                            </td>
+                                                            <td class="text-start" style="font-weight: bold">
+                                                                <span t-field="o.partner_id.partner_strn"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                </table>
+                                            </div>
+                                        </td>
+
+                                        <td style="width: 30%; vertical-align: top;">
+                                            <div class="invoice-details">
+                                                <table class="table table-borderless table-sm"
+                                                       style="table-layout: fixed">
+                                                    <t t-if="o.name">
+                                                        <tr>
+                                                            <td style="text-align: left; width: 40%;">
+                                                                <strong>Invoice No:</strong>
+                                                            </td>
+                                                            <td class="text-start" style="width: 60%;">
+                                                                <span t-field="o.name"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.invoice_date">
+                                                        <tr>
+                                                            <td style="text-align: left;">
+                                                                <strong>Invoice Date:</strong>
+                                                            </td>
+                                                            <td class="text-start" style="font-weight: normal">
+                                                                <span t-field="o.invoice_date"
+                                                                      t-options="{'format': 'dd-MM-yyyy'}"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.po_number">
+                                                        <tr>
+                                                            <td style="text-align: start;">
+                                                                <strong>PO No:</strong>
+                                                            </td>
+                                                            <td class="text-start" style="font-weight: normal">
+                                                                <span t-field="o.po_number"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.dc_number">
+                                                        <tr>
+                                                            <td style="text-align: left; font-weight: normal">
+                                                                <strong>DC No:</strong>
+                                                            </td>
+                                                            <td class="text-start">
+                                                                <span t-field="o.dc_number"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.vendor_code">
+                                                        <tr>
+                                                            <td style="text-align: start;">
+                                                                <strong>Vendor Code:</strong>
+                                                            </td>
+                                                            <td class="text-start">
+                                                                <span t-field="o.vendor_code"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.gst_jurisdiction">
+                                                        <tr>
+                                                            <td style="text-align: start;">
+                                                                <strong>GST Jurisdiction:</strong>
+                                                            </td>
+                                                            <td class="text-start" style="font-weight: normal">
+                                                                <span t-field="o.gst_jurisdiction"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.hs_code">
+                                                        <tr>
+                                                            <td style="text-align: start;">
+                                                                <strong>HS CODE:</strong>
+                                                            </td>
+                                                            <td class="text-start">
+                                                                <span t-field="o.hs_code"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <div class="oe_structure"/>
+                                <div style="width: 100%;">
+                                    <style>
+                                        .rotated-text {
+                                        position: absolute;
+                                        <!--                                    top: 10%;-->
+                                        left: 30%;
+                                        <!--                                                color: rgba(0, 0, 0, 0.1); /* Faint watermark effect */-->
+                                        text-align: center;
+                                        pointer-events: none; /* Non-interactive */
+                                        white-space: nowrap; /* Prevent wrapping */
+                                        color: red;
+                                        font-weight: bold;
+                                        <!--                                        border: 2px dashed red;-->
+                                        display: inline-block;
+                                        padding: 5px;
+                                        opacity: 1;
+                                        <!--                                                background-color: white;-->
+                                        /* Rotate div */
+                                        -ms-transform: rotate(-25deg); /* IE 9 */
+                                        -webkit-transform: rotate(-25deg); /* Chrome, Safari, Opera */
+                                        transform: rotate(-25deg);
+                                        }
+                                    </style>
+                                    <t t-if="o.is_background">
+                                        <div class="rotated-text"
+                                             style="text-align: center; pointer-events: none; padding-top: 10%">
+                                            <span style="font-size: 20px; border: 2px dashed red; display: inline-block; padding: 10px; text-align: center;">
+                                                <span>WHT DEDUCTION
+                                                    <span t-field="o.wh_code"/>
+                                                    %
+                                                </span>
+                                                <br/>
+                                                <span style="font-size: 13px;">UNDER SECTION 153(1) / 153</span>
+                                            </span>
+                                        </div>
+                                    </t>
+
+                                    <table class="table table-sm o_main_table table-bordered" name="invoice_line_table"
+                                           style="font-size: 12px; border-collapse: collapse; table-layout: fixed;">
+                                        <thead>
+                                            <tr style="border-bottom: 1px solid #000;">
+                                                <th name="th_sr" class="text-center"
+                                                    style="width: 5%; border: 1px solid #000;">
+                                                    <span>Sr No.</span>
+                                                </th>
+                                                <th name="th_code" class="text-center"
+                                                    style="width: 8%; border: 1px solid #000;">
+                                                    <span>Item Code</span>
+                                                </th>
+                                                <th name="th_description" class="text-center"
+                                                    style="width: 19%; border: 1px solid #000;">
+                                                    <span>Item Description</span>
+                                                </th>
+                                                <th name="th_quantity" class="text-center"
+                                                    style="width: 7%; border: 1px solid #000;">
+                                                    <span>Quantity</span>
+                                                </th>
+                                                <th name="th_priceunit" class="text-center"
+                                                    style="width: 10%; border: 1px solid #000;">
+                                                    <span>Unit Price (PKR)</span>
+                                                </th>
+                                                <th name="th_priceuntaxed" class="text-center"
+                                                    style="width: 11%; border: 1px solid #000;">
+                                                    <span>Value Exclusive of GST</span>
+                                                </th>
+                                                <th name="th_taxes" class="text-center"
+                                                    style="width: 7%; border: 1px solid #000;">
+                                                    <span>GST Rate</span>
+                                                </th>
+                                                <th name="th_taxe_amount" class="text-center"
+                                                    style="width: 11%; border: 1px solid #000;">
+                                                    <span>GST Amount (PKR)</span>
+                                                </th>
+                                                <th name="th_taxe_further" class="text-center"
+                                                    style="width: 8%; border: 1px solid #000;">
+                                                    <span>Further Tax @% (PKR)</span>
+                                                </th>
+                                                <th name="th_subtotal" class="text-center"
+                                                    style="width: 14%; border: 1px solid #000;">
+                                                    <span>Value Inclusive of GST (PKR)</span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="invoice_tbody">
+                                            <t t-set="serial_number" t-value="0"/>
+                                            <t t-set="total_quantity" t-value="0"/>
+                                            <t t-set="total_price_subtotal" t-value="0"/>
+                                            <t t-set="total_price_subtotal_with_delivery" t-value="0"/>
+                                            <t t-set="total_tax_amount" t-value="0"/>
+                                            <t t-set="total_tax_amount_with_delivery" t-value="0"/>
+                                            <t t-set="total_price_total" t-value="0"/>
+                                            <t t-set="total_price_total" t-value="0"/>
+                                            <t t-set="delivery_tax" t-value="0"/>
+
+                                            <t t-foreach="o.invoice_line_ids.sorted(key=lambda l: l.sequence)"
+                                               t-as="line">
+                                                <t t-set="header_repeat"
+                                                   t-value="header_repeat + 1"/>
+                                                <t t-set="serial_number"
+                                                   t-value="serial_number + 1"/>
+                                                <t t-if="line.product_id.name != 'Delivery Charges'">
+                                                    <tr style="border: 1px solid #000;">
+                                                        <td class="text-center"
+                                                            style="width: 5%; border: 1px solid #000;">
+                                                            <span
+                                                                    t-esc="serial_number"/>
+                                                        </td>
+                                                        <td name="account_invoice_line_code" class="text-center"
+                                                            style="width: 8%; border: 1px solid #000;">
+                                                            <span t-field="line.product_id.default_code"/>
+                                                        </td>
+                                                        <td name="account_invoice_line_name" class="text-center"
+                                                            style="width: 19%; border: 1px solid #000;">
+                                                            <span t-field="line.name"/>
+                                                        </td>
+                                                        <td class="text-center"
+                                                            style="width: 7%; border: 1px solid #000;">
+                                                            <span t-field="line.quantity"/>
+                                                            <t t-set="total_quantity"
+                                                               t-value="total_quantity + line.quantity"/>
+                                                        </td>
+                                                        <td class="text-center"
+                                                            style="width: 10%; border: 1px solid #000;">
+                                                            <t t-esc="line.price_unit or ''"
+                                                               t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
+                                                        </td>
+                                                        <td class="text-center"
+                                                            style="width: 11%; border: 1px solid #000;">
+                                                            <t t-esc="line.price_subtotal or ''"
+                                                               t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
+
+                                                            <t t-set="total_price_subtotal"
+                                                               t-value="total_price_subtotal + line.price_subtotal"/>
+                                                        </td>
+
+                                                        <td class="text-center"
+                                                            style="width: 7%; border: 1px solid #000;">
+                                                            <t t-if="len(line.tax_ids) > 0">
+                                                                <t t-esc="line.tax_ids[0].display_name"/>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <span>-</span>
+                                                            </t>
+                                                        </td>
+
+
+                                                        <!--                                                        <td class="text-center" style="border: 1px solid #000;">-->
+                                                        <!--                                                            <span t-esc="', '.join(tax.display_name for tax in line.tax_ids) if line.tax_ids else '-'"/>-->
+                                                        <!--                                                        </td>-->
+
+
+                                                        <td class="text-center"
+                                                            style="width: 11%; border: 1px solid #000;">
+                                                            <t t-if="line.tax_ids">
+                                                                <span t-esc="(line.tax_ids[0].amount / 100) * line.price_subtotal"
+                                                                      t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <span>-
+                                                                </span>
+                                                            </t>
+                                                            <!--                                                            <t t-set="total_tax_amount"-->
+                                                            <!--                                                               t-value="total_tax_amount + sum((tax.amount / 100) * line.price_subtotal for tax in line.tax_ids)"/>-->
+
+                                                            <t t-set="total_tax_amount"
+                                                               t-value="total_tax_amount + ((line.tax_ids[0].amount / 100) * line.price_subtotal if line.tax_ids else 0)"/>
+                                                        </td>
+
+
+                                                        <!--                                                        <td class="text-center" style="border: 1px solid #000;">-->
+                                                        <!--                                                            <span t-esc="sum((tax.amount / 100) * line.price_subtotal for tax in line.tax_ids)"-->
+                                                        <!--                                                                  t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>-->
+                                                        <!--                                                            <t t-set="total_tax_amount"-->
+                                                        <!--                                                               t-value="total_tax_amount + sum((tax.amount / 100) * line.price_subtotal for tax in line.tax_ids)"/>-->
+                                                        <!--                                                        </td>-->
+
+                                                        <td class="text-center"
+                                                            style="width: 8%; border: 1px solid #000;">
+                                                            <t t-if="len(line.tax_ids) > 1">
+                                                                <t t-esc="line.tax_ids[1].display_name"/>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <span>-</span>
+                                                            </t>
+                                                        </td>
+
+                                                        <td class="text-center"
+                                                            style="width: 14%; border: 1px solid #000;">
+                                                            <t t-esc="line.price_total or ''"
+                                                               t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
+                                                            <t t-set="total_price_total"
+                                                               t-value="total_price_total + line.price_total"/>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-set="total_price_subtotal_with_delivery"
+                                                       t-value="total_price_total + line.price_total"/>
+
+                                                </t>
+                                            </t>
+
+
+                                            <!-- Total Row -->
+                                            <tr class="is-subtotal text-center" style="border-top: 2px solid #000;">
+                                                <td colspan="5" class="text-center" style="border: 1px solid #000;">
+                                                    <strong>Total</strong>
+                                                </td>
+                                                <td class="text-center" style="border: 1px solid #000;">
+                                                    <strong>
+                                                        <span t-esc="total_price_subtotal"
+                                                              t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
+                                                    </strong>
+                                                </td>
+                                                <td class="text-center" style="border: 1px solid #000;">
+                                                    <strong>-</strong>
+                                                </td>
+                                                <td class="text-center" style="border: 1px solid #000;">
+                                                    <strong>
+                                                        <span t-esc="total_tax_amount"
+                                                              t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
+                                                    </strong>
+                                                </td>
+                                                <td class="text-center" style="border: 1px solid #000;">
+                                                    <strong>-</strong>
+                                                </td>
+                                                <td class="text-center" style="border: 1px solid #000;">
+                                                    <strong>
+                                                        <span t-esc="total_price_total"
+                                                              t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
+                                                    </strong>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <table class="table table-borderless table-sm" style="table-layout: fixed;">
+                                    <tr>
+                                        <td style="width: 60%; vertical-align: top;">
+                                            <div class="bank-details">
+                                                <table class="table table-borderless table-sm"
+                                                       style="table-layout: fixed;">
+                                                    <t t-if="o.account_number">
+                                                        <tr>
+                                                            <td style="width: 20%; text-align: start">
+                                                                <span>Bank A/C No # :</span>
+                                                            </td>
+                                                            <td class="text-start"
+                                                                style="width: 80%; font-weight: bold;">
+                                                                <u>
+                                                                    <span t-esc="o.account_number"/>
+                                                                </u>
+                                                            </td>
+                                                            <!--                                                            <td style="width: 20%">-->
+
+                                                            <!--                                                            </td>-->
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.account_title.name">
+                                                        <tr>
+                                                            <td style="text-align: start; width: 20%; ">
+                                                                <span>Account Title :</span>
+                                                            </td>
+                                                            <td class="text-start"
+                                                                style="font-weight: bold; width: 80%; ">
+                                                                <span t-esc="o.account_title.name"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.bank_name.name">
+                                                        <tr>
+                                                            <td style="text-align: start;">
+                                                                <span>Bank Name :</span>
+                                                            </td>
+                                                            <td class="text-start">
+                                                                <span t-esc="o.bank_name.name"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o._get_formatted_bank_address()">
+                                                        <tr>
+                                                            <td style="text-align: start;">
+                                                                <span>Bank Address :</span>
+                                                            </td>
+                                                            <td class="text-start">
+                                                                <span t-esc="o._get_formatted_bank_address()"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.narration">
+                                                        <tr>
+                                                            <td style="text-align: start; font-weight: bold">
+                                                                <strong>Other Details :</strong>
+                                                            </td>
+                                                            <td class="text-start">
+                                                                <u>
+                                                                    <span t-field="o.other_detail"/>
+                                                                </u>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                </table>
+                                            </div>
+                                        </td>
+                                        <td style="width: 40%; vertical-align: top;">
+                                            <div class="total-summary">
+                                                <table class="table table-borderless table-sm"
+                                                       style="table-layout: fixed;">
+                                                    <tr>
+                                                        <td>Net Amount :</td>
+                                                        <td class="text-end">
+                                                            <span t-esc="total_price_subtotal"
+                                                                  t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>GST Amount :</td>
+                                                        <td class="text-end">
+                                                            <span t-esc="total_tax_amount"
+                                                                  t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Delivery Cost :</td>
+                                                        <td class="text-end">
+                                                            <t t-if="o.invoice_line_ids">
+                                                                <t t-set="delivery_tax"
+                                                                   t-value="sum((tax.amount / 100) * line.price_subtotal for line in o.invoice_line_ids.filtered(lambda l: l.product_id.name == 'Delivery Charges') for tax in line.tax_ids)"/>
+                                                                <t t-if="o.invoice_line_ids.filtered(lambda l: l.product_id.name == 'Delivery Charges')">
+                                                                    <span t-esc="total_price_subtotal_with_delivery - total_price_total - delivery_tax"
+                                                                          t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <span t-esc="total_price_subtotal_with_delivery"
+                                                                          t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                                                </t>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <span>-
+                                                                </span>
+                                                            </t>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>GST on Delivery Cost @% (
+                                                            <span t-esc="', '.join(tax.display_name for tax in o.invoice_line_ids.filtered(lambda l: l.product_id.name == 'Delivery Charges').tax_ids)"/>
+                                                            ):
+                                                        </td>
+                                                        <td class="text-end">
+                                                            <t t-if="o.invoice_line_ids">
+                                                                <t t-set="delivery_tax"
+                                                                   t-value="sum((tax.amount / 100) * line.price_subtotal for line in o.invoice_line_ids.filtered(lambda l: l.product_id.name == 'Delivery Charges') for tax in line.tax_ids)"/>
+                                                                <span t-esc="delivery_tax"
+                                                                      t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <span>-
+                                                                </span>
+                                                            </t>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border: 1px solid #000;">
+                                                        <td style="border: 1px solid #000; border-right: none;">
+                                                            <strong>Gross Amount :</strong>
+                                                        </td>
+                                                        <td class="text-end"
+                                                            style="border: 1px solid #000; border-left: none">
+                                                            <t t-if="o.invoice_line_ids">
+                                                                <t t-set="delivery_tax"
+                                                                   t-value="sum((tax.amount / 100) * line.price_subtotal for line in o.invoice_line_ids.filtered(lambda l: l.product_id.name == 'Delivery Charges') for tax in line.tax_ids)"/>
+                                                                <span t-esc="total_price_subtotal_with_delivery"
+                                                                      t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <span t-esc="total_price_total"
+                                                                      t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                                            </t>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+
+
+                                <table class="table table-borderless" style="width: 50%; table-layout: fixed;">
+                                    <!--                                    <t t-if="o.invoice_user_id.user_signature">-->
+                                    <tr style="border-bottom: 1px solid #000;">
+                                        <td style="width: 30%;">
+                                            Authorized Signature:
+                                        </td>
+                                        <td style="width: 70%">
+                                            <!--                                                <img t-if="o.invoice_user_id.user_signature"-->
+                                            <!--                                                     t-att-src="'data:image/png;base64,' + (o.invoice_user_id.user_signature and o.invoice_user_id.user_signature.decode('utf-8') or '')"-->
+                                            <!--                                                     alt="Authorized Signature"-->
+                                            <!--                                                     style="height:70px; width:100px; position: absolute; margin-top: -30px;"/>-->
+                                        </td>
+                                    </tr>
+                                    <!--                                    </t>-->
+                                    <t t-if="o.od_auth_sign">
+                                        <tr style="border-bottom: 1px solid #000;">
+                                            <td>
+                                                <span>Name:</span>
+                                            </td>
+                                            <td class="text-start" style="text-align: left; font-size: 14px">
+                                                <b>
+                                                    <span t-field="o.od_auth_sign"/>
+                                                </b>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                                <table class="table table-borderless" style="width: 50%; table-layout: fixed;">
+                                    <tr style="border-bottom: 1px solid #000;">
+                                        <td>
+                                            Stamp:
+                                        </td>
+                                        <td/>
+                                    </tr>
+                                </table>
+
+
+                                <!-- Second Page-->
+                                <div style="page-break-after: always;"/>
+                                <!-- Header-->
+                                <div class="row" style="width:100%;">
+                                    <table class="table table-borderless">
+                                        <tr>
+                                            <td>
+                                                <img src="ssol_od_sale_customization/static/src/img/header_footer/inv_header.png"
+                                                     width="400px"
+                                                     height="80px"
+                                                     style="padding-top: 0px;"/>
+                                            </td>
+                                            <td style="font-size: 14px; padding-top: 20px; padding-right: 20px; text-align: right;">
+                                                <span style="border: 2px solid #c00000; color: #c00000; padding: 5px;">
+                                                    <b>OFFICE</b>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <!-- Header-->
+                                <div class="row">
+                                    <center>
+                                        <b>
+                                            <span style="font-size:18px;">SALES TAX INVOICE</span>
+                                        </b>
+                                    </center>
+                                </div>
+                                <br/>
+                                <table class="table table-borderless table-sm"
+                                       style="width: 30%; float: right; font-weight: bold; font-size:13px; table-layout: fixed;">
+                                    <t t-if="o.company_id.strn">
+                                        <tr>
+                                            <td style="width: 30%">
+                                                <span>STRN #</span>
+                                            </td>
+                                            <td style="width: 70%; font-weight: bold">
+                                                <span t-field="o.company_id.strn"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <t t-if="o.company_id.vat">
+                                        <tr>
+                                            <td>
+                                                NTN #
+                                            </td>
+                                            <td>
+                                                <span t-field="o.company_id.vat"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                                <table class="table table-borderless" style="table-layout: fixed">
+                                    <tr>
+                                        <td style="width: 70%; vertical-align: top;">
+                                            <div class="customer-info">
+                                                <table class="table table-borderless table-sm"
+                                                       style="table-layout: fixed">
+                                                    <t t-if="o.partner_id.name">
+                                                        <tr>
+                                                            <td style="width: 25%; text-align: start;">
+                                                                <strong>Customer Name:</strong>
+                                                            </td>
+                                                            <td class="text-start" style="font-weight: bold">
+                                                                <t t-if="docs.partner_id.company_name">
+                                                                    <span t-field="docs.partner_id.company_name"/>
+                                                                </t>
+                                                                <t t-elif="docs.partner_id.parent_id.name">
+                                                                    <span t-field="docs.partner_id.parent_id.name"/>
+                                                                </t>
+                                                                <t t-elif="docs.partner_id.name">
+                                                                    <span t-field="o.partner_id.name"/>
+                                                                </t>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.partner_id.contact_address">
+                                                        <tr>
+                                                            <td style="text-align: start;">
+                                                                <strong>Delivery Address:</strong>
+                                                            </td>
+                                                            <td class="text-start" style="font-weight: normal">
+                                                                <span t-field="o.partner_id.contact_address"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.territory_id">
+                                                        <tr>
+                                                            <td style="text-align: start;">
+                                                                <strong>Territory:</strong>
+                                                            </td>
+                                                            <td class="text-start" style="font-weight: normal">
+                                                                <span t-field="o.territory_id"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.partner_id.vat">
+                                                        <tr>
+                                                            <td style="text-align: start;">
+                                                                <strong>NTN #:</strong>
+                                                            </td>
+                                                            <td class="text-start" style="font-weight: bold">
+                                                                <span t-field="o.partner_id.vat"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.partner_id.partner_strn">
+                                                        <tr>
+                                                            <td style="text-align: start;">
+                                                                <strong>STRN #:</strong>
+                                                            </td>
+                                                            <td class="text-start" style="font-weight: bold">
+                                                                <span t-field="o.partner_id.partner_strn"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                </table>
+                                            </div>
+                                        </td>
+
+                                        <td style="width: 30%; vertical-align: top;">
+                                            <div class="invoice-details">
+                                                <table class="table table-borderless table-sm"
+                                                       style="table-layout: fixed">
+                                                    <t t-if="o.name">
+                                                        <tr>
+                                                            <td style="text-align: left; width: 40%;">
+                                                                <strong>Invoice No:</strong>
+                                                            </td>
+                                                            <td class="text-start" style="width: 60%;">
+                                                                <span t-field="o.name"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.invoice_date">
+                                                        <tr>
+                                                            <td style="text-align: left;">
+                                                                <strong>Invoice Date:</strong>
+                                                            </td>
+                                                            <td class="text-start" style="font-weight: normal">
+                                                                <span t-field="o.invoice_date"
+                                                                      t-options="{'format': 'dd-MM-yyyy'}"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.po_number">
+                                                        <tr>
+                                                            <td style="text-align: start;">
+                                                                <strong>PO No:</strong>
+                                                            </td>
+                                                            <td class="text-start" style="font-weight: normal">
+                                                                <span t-field="o.po_number"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.dc_number">
+                                                        <tr>
+                                                            <td style="text-align: left; font-weight: normal">
+                                                                <strong>DC No:</strong>
+                                                            </td>
+                                                            <td class="text-start">
+                                                                <span t-field="o.dc_number"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.vendor_code">
+                                                        <tr>
+                                                            <td style="text-align: start;">
+                                                                <strong>Vendor Code:</strong>
+                                                            </td>
+                                                            <td class="text-start">
+                                                                <span t-field="o.vendor_code"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.gst_jurisdiction">
+                                                        <tr>
+                                                            <td style="text-align: start;">
+                                                                <strong>GST Jurisdiction:</strong>
+                                                            </td>
+                                                            <td class="text-start" style="font-weight: normal">
+                                                                <span t-field="o.gst_jurisdiction"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.hs_code">
+                                                        <tr>
+                                                            <td style="text-align: start;">
+                                                                <strong>HS CODE:</strong>
+                                                            </td>
+                                                            <td class="text-start">
+                                                                <span t-field="o.hs_code"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <div class="oe_structure"/>
+                                <div style="width: 100%;">
+                                    <style>
+                                        .rotated-text {
+                                        position: absolute;
+                                        <!--                                    top: 10%;-->
+                                        left: 30%;
+                                        <!--                                                color: rgba(0, 0, 0, 0.1); /* Faint watermark effect */-->
+                                        text-align: center;
+                                        pointer-events: none; /* Non-interactive */
+                                        white-space: nowrap; /* Prevent wrapping */
+                                        color: red;
+                                        font-weight: bold;
+                                        <!--                                        border: 2px dashed red;-->
+                                        display: inline-block;
+                                        padding: 5px;
+                                        opacity: 1;
+                                        <!--                                                background-color: white;-->
+                                        /* Rotate div */
+                                        -ms-transform: rotate(-25deg); /* IE 9 */
+                                        -webkit-transform: rotate(-25deg); /* Chrome, Safari, Opera */
+                                        transform: rotate(-25deg);
+                                        }
+                                    </style>
+                                    <t t-if="o.is_background">
+                                        <div class="rotated-text"
+                                             style="text-align: center; pointer-events: none; padding-top: 10%">
+                                            <span style="font-size: 20px; border: 2px dashed red; display: inline-block; padding: 10px; text-align: center;">
+                                                <span>WHT DEDUCTION
+                                                    <span t-field="o.wh_code"/>
+                                                    %
+                                                </span>
+                                                <br/>
+                                                <span style="font-size: 13px;">UNDER SECTION 153(1) / 153</span>
+                                            </span>
+                                        </div>
+                                    </t>
+
+                                    <table class="table table-sm o_main_table table-bordered" name="invoice_line_table"
+                                           style="font-size: 12px; border-collapse: collapse; table-layout: fixed;">
+                                        <thead>
+                                            <tr style="border-bottom: 1px solid #000;">
+                                                <th name="th_sr" class="text-center"
+                                                    style="width: 5%; border: 1px solid #000;">
+                                                    <span>Sr No.</span>
+                                                </th>
+                                                <th name="th_code" class="text-center"
+                                                    style="width: 8%; border: 1px solid #000;">
+                                                    <span>Item Code</span>
+                                                </th>
+                                                <th name="th_description" class="text-center"
+                                                    style="width: 19%; border: 1px solid #000;">
+                                                    <span>Item Description</span>
+                                                </th>
+                                                <th name="th_quantity" class="text-center"
+                                                    style="width: 7%; border: 1px solid #000;">
+                                                    <span>Quantity</span>
+                                                </th>
+                                                <th name="th_priceunit" class="text-center"
+                                                    style="width: 10%; border: 1px solid #000;">
+                                                    <span>Unit Price (PKR)</span>
+                                                </th>
+                                                <th name="th_priceuntaxed" class="text-center"
+                                                    style="width: 11%; border: 1px solid #000;">
+                                                    <span>Value Exclusive of GST</span>
+                                                </th>
+                                                <th name="th_taxes" class="text-center"
+                                                    style="width: 7%; border: 1px solid #000;">
+                                                    <span>GST Rate</span>
+                                                </th>
+                                                <th name="th_taxe_amount" class="text-center"
+                                                    style="width: 11%; border: 1px solid #000;">
+                                                    <span>GST Amount (PKR)</span>
+                                                </th>
+                                                <th name="th_taxe_further" class="text-center"
+                                                    style="width: 8%; border: 1px solid #000;">
+                                                    <span>Further Tax @% (PKR)</span>
+                                                </th>
+                                                <th name="th_subtotal" class="text-center"
+                                                    style="width: 14%; border: 1px solid #000;">
+                                                    <span>Value Inclusive of GST (PKR)</span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="invoice_tbody">
+                                            <t t-set="serial_number" t-value="0"/>
+                                            <t t-set="total_quantity" t-value="0"/>
+                                            <t t-set="total_price_subtotal" t-value="0"/>
+                                            <t t-set="total_price_subtotal_with_delivery" t-value="0"/>
+                                            <t t-set="total_tax_amount" t-value="0"/>
+                                            <t t-set="total_tax_amount_with_delivery" t-value="0"/>
+                                            <t t-set="total_price_total" t-value="0"/>
+                                            <t t-set="total_price_total" t-value="0"/>
+                                            <t t-set="delivery_tax" t-value="0"/>
+
+                                            <t t-foreach="o.invoice_line_ids.sorted(key=lambda l: l.sequence)"
+                                               t-as="line">
+                                                <t t-set="header_repeat"
+                                                   t-value="header_repeat + 1"/>
+                                                <t t-set="serial_number"
+                                                   t-value="serial_number + 1"/>
+                                                <t t-if="line.product_id.name != 'Delivery Charges'">
+                                                    <tr style="border: 1px solid #000;">
+                                                        <td class="text-center"
+                                                            style="width: 5%; border: 1px solid #000;">
+                                                            <span t-esc="serial_number"/>
+                                                        </td>
+                                                        <td name="account_invoice_line_code" class="text-center"
+                                                            style="width: 8%; border: 1px solid #000;">
+                                                            <span t-field="line.product_id.default_code"/>
+                                                        </td>
+                                                        <td name="account_invoice_line_name" class="text-center"
+                                                            style="width: 19%; border: 1px solid #000;">
+                                                            <span t-field="line.name"/>
+                                                        </td>
+                                                        <td class="text-center"
+                                                            style="width: 7%; border: 1px solid #000;">
+                                                            <span t-field="line.quantity"/>
+                                                            <t t-set="total_quantity"
+                                                               t-value="total_quantity + line.quantity"/>
+                                                        </td>
+                                                        <td class="text-center"
+                                                            style="width: 10%; border: 1px solid #000;">
+                                                            <t t-esc="line.price_unit or ''"
+                                                               t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
+                                                        </td>
+                                                        <td class="text-center"
+                                                            style="width: 11%; border: 1px solid #000;">
+                                                            <t t-esc="line.price_subtotal or ''"
+                                                               t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
+
+                                                            <t t-set="total_price_subtotal"
+                                                               t-value="total_price_subtotal + line.price_subtotal"/>
+                                                        </td>
+
+                                                        <td class="text-center"
+                                                            style="width: 7%; border: 1px solid #000;">
+                                                            <t t-if="len(line.tax_ids) > 0">
+                                                                <t t-esc="line.tax_ids[0].display_name"/>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <span>-</span>
+                                                            </t>
+                                                        </td>
+
+
+                                                        <!--                                                        <td class="text-center" style="border: 1px solid #000;">-->
+                                                        <!--                                                            <span t-esc="', '.join(tax.display_name for tax in line.tax_ids) if line.tax_ids else '-'"/>-->
+                                                        <!--                                                        </td>-->
+
+
+                                                        <td class="text-center"
+                                                            style="width: 11%; border: 1px solid #000;">
+                                                            <t t-if="line.tax_ids">
+                                                                <span t-esc="(line.tax_ids[0].amount / 100) * line.price_subtotal"
+                                                                      t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <span>-
+                                                                </span>
+                                                            </t>
+                                                            <!--                                                            <t t-set="total_tax_amount"-->
+                                                            <!--                                                               t-value="total_tax_amount + sum((tax.amount / 100) * line.price_subtotal for tax in line.tax_ids)"/>-->
+
+                                                            <t t-set="total_tax_amount"
+                                                               t-value="total_tax_amount + ((line.tax_ids[0].amount / 100) * line.price_subtotal if line.tax_ids else 0)"/>
+                                                        </td>
+
+
+                                                        <!--                                                        <td class="text-center" style="border: 1px solid #000;">-->
+                                                        <!--                                                            <span t-esc="sum((tax.amount / 100) * line.price_subtotal for tax in line.tax_ids)"-->
+                                                        <!--                                                                  t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>-->
+                                                        <!--                                                            <t t-set="total_tax_amount"-->
+                                                        <!--                                                               t-value="total_tax_amount + sum((tax.amount / 100) * line.price_subtotal for tax in line.tax_ids)"/>-->
+                                                        <!--                                                        </td>-->
+
+                                                        <td class="text-center"
+                                                            style="width: 8%; border: 1px solid #000;">
+                                                            <t t-if="len(line.tax_ids) > 1">
+                                                                <t t-esc="line.tax_ids[1].display_name"/>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <span>-</span>
+                                                            </t>
+                                                        </td>
+
+                                                        <td class="text-center"
+                                                            style="width: 14%; border: 1px solid #000;">
+                                                            <t t-esc="line.price_total or ''"
+                                                               t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
+                                                            <t t-set="total_price_total"
+                                                               t-value="total_price_total + line.price_total"/>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-set="total_price_subtotal_with_delivery"
+                                                       t-value="total_price_total + line.price_total"/>
+
+                                                </t>
+                                            </t>
+
+
+                                            <!-- Total Row -->
+                                            <tr class="is-subtotal text-center" style="border-top: 2px solid #000;">
+                                                <td colspan="5" class="text-center" style="border: 1px solid #000;">
+                                                    <strong>Total</strong>
+                                                </td>
+                                                <td class="text-center" style="border: 1px solid #000;">
+                                                    <strong>
+                                                        <span t-esc="total_price_subtotal"
+                                                              t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
+                                                    </strong>
+                                                </td>
+                                                <td class="text-center" style="border: 1px solid #000;">
+                                                    <strong>-</strong>
+                                                </td>
+                                                <td class="text-center" style="border: 1px solid #000;">
+                                                    <strong>
+                                                        <span t-esc="total_tax_amount"
+                                                              t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
+                                                    </strong>
+                                                </td>
+                                                <td class="text-center" style="border: 1px solid #000;">
+                                                    <strong>-</strong>
+                                                </td>
+                                                <td class="text-center" style="border: 1px solid #000;">
+                                                    <strong>
+                                                        <span t-esc="total_price_total"
+                                                              t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
+                                                    </strong>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <table class="table table-borderless table-sm" style="table-layout: fixed;">
+                                    <tr>
+                                        <td style="width: 60%; vertical-align: top;">
+                                            <div class="bank-details">
+                                                <table class="table table-borderless table-sm"
+                                                       style="table-layout: fixed;">
+                                                    <t t-if="o.account_number">
+                                                        <tr>
+                                                            <td style="width: 20%; text-align: start">
+                                                                <span>Bank A/C No # :</span>
+                                                            </td>
+                                                            <td class="text-start"
+                                                                style="width: 80%; font-weight: bold;">
+                                                                <u>
+                                                                    <span t-esc="o.account_number"/>
+                                                                </u>
+                                                            </td>
+                                                            <!--                                                            <td style="width: 20%">-->
+
+                                                            <!--                                                            </td>-->
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.account_title.name">
+                                                        <tr>
+                                                            <td style="text-align: start; width: 20%; ">
+                                                                <span>Account Title :</span>
+                                                            </td>
+                                                            <td class="text-start"
+                                                                style="font-weight: bold; width: 80%; ">
+                                                                <span t-esc="o.account_title.name"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.bank_name.name">
+                                                        <tr>
+                                                            <td style="text-align: start;">
+                                                                <span>Bank Name :</span>
+                                                            </td>
+                                                            <td class="text-start">
+                                                                <span t-esc="o.bank_name.name"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o._get_formatted_bank_address()">
+                                                        <tr>
+                                                            <td style="text-align: start;">
+                                                                <span>Bank Address :</span>
+                                                            </td>
+                                                            <td class="text-start">
+                                                                <span t-esc="o._get_formatted_bank_address()"/>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-if="o.narration">
+                                                        <tr>
+                                                            <td style="text-align: start; font-weight: bold">
+                                                                <strong>Other Details :</strong>
+                                                            </td>
+                                                            <td class="text-start">
+                                                                <u>
+                                                                    <span t-field="o.other_detail"/>
+                                                                </u>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                </table>
+                                            </div>
+                                        </td>
+                                        <td style="width: 40%; vertical-align: top;">
+                                            <div class="total-summary">
+                                                <table class="table table-borderless table-sm"
+                                                       style="table-layout: fixed;">
+                                                    <tr>
+                                                        <td>Net Amount :</td>
+                                                        <td class="text-end">
+                                                            <span t-esc="total_price_subtotal"
+                                                                  t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>GST Amount :</td>
+                                                        <td class="text-end">
+                                                            <span t-esc="total_tax_amount"
+                                                                  t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Delivery Cost :</td>
+                                                        <td class="text-end">
+                                                            <t t-if="o.invoice_line_ids">
+                                                                <t t-set="delivery_tax"
+                                                                   t-value="sum((tax.amount / 100) * line.price_subtotal for line in o.invoice_line_ids.filtered(lambda l: l.product_id.name == 'Delivery Charges') for tax in line.tax_ids)"/>
+                                                                <t t-if="o.invoice_line_ids.filtered(lambda l: l.product_id.name == 'Delivery Charges')">
+                                                                    <span t-esc="total_price_subtotal_with_delivery - total_price_total - delivery_tax"
+                                                                          t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <span t-esc="total_price_subtotal_with_delivery"
+                                                                          t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                                                </t>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <span>-
+                                                                </span>
+                                                            </t>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>GST on Delivery Cost @% (
+                                                            <span t-esc="', '.join(tax.display_name for tax in o.invoice_line_ids.filtered(lambda l: l.product_id.name == 'Delivery Charges').tax_ids)"/>
+                                                            ):
+                                                        </td>
+                                                        <td class="text-end">
+                                                            <t t-if="o.invoice_line_ids">
+                                                                <t t-set="delivery_tax"
+                                                                   t-value="sum((tax.amount / 100) * line.price_subtotal for line in o.invoice_line_ids.filtered(lambda l: l.product_id.name == 'Delivery Charges') for tax in line.tax_ids)"/>
+                                                                <span t-esc="delivery_tax"
+                                                                      t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <span>-
+                                                                </span>
+                                                            </t>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border: 1px solid #000;">
+                                                        <td style="border: 1px solid #000; border-right: none;">
+                                                            <strong>Gross Amount :</strong>
+                                                        </td>
+                                                        <td class="text-end"
+                                                            style="border: 1px solid #000; border-left: none">
+                                                            <t t-if="o.invoice_line_ids">
+                                                                <t t-set="delivery_tax"
+                                                                   t-value="sum((tax.amount / 100) * line.price_subtotal for line in o.invoice_line_ids.filtered(lambda l: l.product_id.name == 'Delivery Charges') for tax in line.tax_ids)"/>
+                                                                <span t-esc="total_price_subtotal_with_delivery"
+                                                                      t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <span t-esc="total_price_total"
+                                                                      t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                                            </t>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+
+
+                                <table class="table table-borderless" style="width: 50%; table-layout: fixed;">
+                                    <!--                                    <t t-if="o.invoice_user_id.user_signature">-->
+                                    <tr style="border-bottom: 1px solid #000;">
+                                        <td style="width: 30%;">
+                                            Authorized Signature:
+                                        </td>
+                                        <td style="width: 70%">
+                                            <!--                                                <img t-if="o.invoice_user_id.user_signature"-->
+                                            <!--                                                     t-att-src="'data:image/png;base64,' + (o.invoice_user_id.user_signature and o.invoice_user_id.user_signature.decode('utf-8') or '')"-->
+                                            <!--                                                     alt="Authorized Signature"-->
+                                            <!--                                                     style="height:70px; width:100px; position: absolute; margin-top: -30px;"/>-->
+                                        </td>
+                                    </tr>
+                                    <!--                                    </t>-->
+                                    <t t-if="o.od_auth_sign">
+                                        <tr style="border-bottom: 1px solid #000;">
+                                            <td>
+                                                <span>Name:</span>
+                                            </td>
+                                            <td class="text-start" style="text-align: left; font-size: 14px">
+                                                <b>
+                                                    <span t-field="o.od_auth_sign"/>
+                                                </b>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                                <table class="table table-borderless" style="width: 50%; table-layout: fixed;">
+                                    <tr style="border-bottom: 1px solid #000;">
+                                        <td>
+                                            Stamp:
+                                        </td>
+                                        <td/>
+                                    </tr>
+                                </table>
+                            </t>
+                        </t>
+                    </t>
+                    <div class="footer" style="text-align: center; font-weight: bold;">
+                        <table class="table table-borderless" style="width: 80%; margin: 0 auto; table-layout: fixed;">
+                            <tr>
+                                <td>
+                                    <img src="/ssol_od_account_customization/static/src/img/header_footer/footer.png"
+                                         width="800px"
+                                         height="100px"
+                                         style="padding-top: 0px;"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+    </data>
+</odoo>
+
+
