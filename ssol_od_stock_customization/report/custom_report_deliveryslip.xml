@@ -26,14 +26,18 @@
                             <div name="outgoing_delivery_address"
                                 t-if="o.should_print_delivery_address()">
                                 <span><strong>Delivery Address:</strong></span>
+                                <div t-out="o.move_ids[0].partner_id.name"/>
+                                <div t-out="o.move_ids[0].partner_id.parent_id.name"/>
                                 <div t-out="o.move_ids[0].partner_id or o.partner_id"
-                                    t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                                    t-options='{"widget": "contact", "fields": ["address", "phone"], "no_marker": True, "phone_icons": True}'/>
                             </div>
                             <div name="outgoing_warehouse_address"
                                  t-elif="o.picking_type_id.code != 'internal' and o.picking_type_id.warehouse_id.partner_id">
                                 <span><strong>Warehouse Address:</strong></span>
+                                <div t-out="o.move_ids[0].partner_id.name"/>
+                                <div t-out="o.move_ids[0].partner_id.parent_id.name"/>
                                 <div t-field="o.picking_type_id.warehouse_id.partner_id"
-                                    t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                                    t-options='{"widget": "contact", "fields": ["address", "phone"], "no_marker": True, "phone_icons": True}'/>
                             </div>
                         </div>
     <!--                    </t>-->
@@ -51,7 +55,7 @@
                                 </div>
                                 <div t-if="show_partner" name="partner_header">
                                     <div t-field="partner.commercial_partner_id"
-                                         t-options='{"widget": "contact", "fields": ["address", "name", "phone", "vat"], "no_marker": True, "phone_icons": True}'/>
+                                         t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
                                 </div>
                             </div>
                         </div>
@@ -59,7 +63,7 @@
 <!--                    </t>-->
 
                     <div class="page">
-                        <div class="mt-2">
+                        <div style="margin-top:4px;">
                             <strong>Your Ref:</strong>
                             <span t-if="o.dc_number">
                                 PO # <span t-field="o.dc_number"/>
@@ -69,7 +73,7 @@
                                 PO # ________________________
                             </span>
                         </div>
-                        <div class="oe_structure"></div>
+                        <br/>
 <!--                        <div class="report-wrapping-flexbox clearfix row mt32 mb32">-->
 <!--                            <div t-if="o.origin" class="col-auto col-3 mw-100 mb-2" name="div_origin">-->
 <!--                                <strong>Order:</strong>-->
@@ -81,8 +85,8 @@
 <!--                                    <p t-else="" t-field="o.scheduled_date" class="m-0"/>-->
 <!--                            </div>-->
 <!--                        </div>-->
-                        <div class="oe_structure"></div>
-                        <table class="table table-sm" t-if="o.state!='done'" name="stock_move_table">
+<!--                        <div class="oe_structure"></div>-->
+                        <table class="table table-sm mt-0 mb-0" t-if="o.state!='done'" name="stock_move_table">
                             <thead>
                                 <tr>
                                     <th name="th_sm_seq"><strong></strong></th>
@@ -114,7 +118,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <table class="table table-sm mt48" t-elif="o.move_line_ids and o.state=='done'" name="stock_move_line_table">
+                        <table class="table table-sm mt-0 mb-0" t-elif="o.move_line_ids and o.state=='done'" name="stock_move_line_table">
                             <t t-set="has_serial_number" t-value="False"/>
                             <t t-set="has_serial_number" t-value="o.move_line_ids.mapped('lot_id')" groups="stock.group_lot_on_delivery_slip"/>
                             <thead>
