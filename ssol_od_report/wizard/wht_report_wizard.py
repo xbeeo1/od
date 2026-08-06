@@ -1,0 +1,27 @@
+from odoo import models, fields
+
+
+class WHTReportWizard(models.TransientModel):
+    _name = 'wht.report.wizard'
+    _description = 'WHT Report Wizard'
+
+    date_from = fields.Date(string='Date From', required=True)
+    date_to = fields.Date(string='Date To', required=True)
+    partner_id = fields.Many2one(
+        'res.partner',
+        string='Partner',
+        required=True,
+    )
+
+    def action_generate_xlsx(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_url',
+            'url': (
+                '/wht_report/xlsx'
+                f'?date_from={self.date_from}'
+                f'&date_to={self.date_to}'
+                f'&partner_id={self.partner_id.id}'
+            ),
+            'target': 'self',
+        }
