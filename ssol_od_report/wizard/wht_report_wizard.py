@@ -15,13 +15,15 @@ class WHTReportWizard(models.TransientModel):
 
     def action_generate_xlsx(self):
         self.ensure_one()
+        url = (
+            '/wht_report/xlsx'
+            f'?date_from={self.date_from}'
+            f'&date_to={self.date_to}'
+        )
+        if self.partner_id:
+            url += f'&partner_id={self.partner_id.id}'
         return {
             'type': 'ir.actions.act_url',
-            'url': (
-                '/wht_report/xlsx'
-                f'?date_from={self.date_from}'
-                f'&date_to={self.date_to}'
-                f'&partner_id={self.partner_id.id}'
-            ),
+            'url': url,
             'target': 'self',
         }
