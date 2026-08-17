@@ -13,6 +13,7 @@ class WHTReportController(http.Controller):
     def wht_report_xlsx(self, date_from=None, date_to=None, partner_id=None, **kw):
         domain = [
             ('state', '=', 'posted'),
+            ('partner_id.customer_rank', '>', 0),
         ]
         if date_from:
             domain.append(('date', '>=', date_from))

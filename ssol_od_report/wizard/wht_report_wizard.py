@@ -9,7 +9,9 @@ class WHTReportWizard(models.TransientModel):
     date_to = fields.Date(string='Date To', required=True)
     partner_id = fields.Many2one(
         'res.partner',
-        string='Partner'
+        string='Partner',
+        required=False,
+        domain=[('customer_rank', '>', 0)],
     )
 
     def action_generate_xlsx(self):
